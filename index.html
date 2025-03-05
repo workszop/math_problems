@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fun Math Problems for Kids</title>
+  <!-- Using Bootstrap CSS for styling -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <style>
+    body {
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    .problem-card {
+      margin-bottom: 1.5rem;
+    }
+    .problem-title {
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+    .interactive-input {
+      margin-top: 0.5rem;
+    }
+    .help-section {
+      border: 1px solid #ced4da;
+      background: #e9ecef;
+      padding: 10px;
+      margin-top: 10px;
+      display: none;
+    }
+    .help-buttons {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    /* Custom header styles with different colors for each problem */
+    .problem-header {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    .problem-header-1 { background-color: #cce5ff; }   /* Painting - light blue */
+    .problem-header-2 { background-color: #d4edda; }   /* Road Trip - light green */
+    .problem-header-3 { background-color: #fff3cd; }   /* Farm Animals - light yellow */
+    .problem-header-4 { background-color: #d1ecf1; }   /* Odd Shapes - light cyan */
+    .problem-header-5 { background-color: #f8d7da; }   /* Fundraiser - light red */
+    .problem-header-6 { background-color: #e2e3e5; }   /* Grocery Budget - light grey */
+    .problem-header-7 { background-color: #e6e6fa; }   /* Carnival - lavender */
+    .problem-header-8 { background-color: #fef9c3; }   /* Birdhouse - soft yellow */
+    .problem-header-9 { background-color: #ffe4e1; }   /* Cookie Jar - misty rose */
+    .problem-header-10 { background-color: #e0ffff; }  /* Garden Design - light cyan */
+    .problem-header-11 { background-color: #f0e68c; }  /* Leaky Faucet - khaki */
+    .problem-header-12 { background-color: #d3d3d3; }  /* School Bus - light grey */
+    .problem-header-13 { background-color: #ffb6c1; }  /* Candy Jar - light pink */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4">Fun Math Problems for Kids</h1>
+    <p>Pick a problem below to read, try out the interactive tools, and get some cool hints and ideas!</p>
+    
+    <div class="accordion" id="problemsAccordion">
+      <!-- Global Help Toggle Script -->
+      <script>
+        function toggleContent(id) {
+          var x = document.getElementById(id);
+          if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+      </script>
+      
+      <!-- Problem 1: Painting the Fence -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed problem-header problem-header-1" type="button" data-bs-toggle="collapse" data-bs-target="#problem1" aria-expanded="false" aria-controls="problem1">
+            Problem 1: The Fence Dilemma 🎨🖌️
+          </button>
+        </h2>
+        <div id="problem1" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> Imagine you have a super long fence that is 32 meters, but you don't know how tall it is! How much area would you paint on one side?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('fenceTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('fenceSolutions')">Solutions</button>
+            </div>
+            <div id="fenceTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>You don't know the height of the fence.</li>
+                <li>You can still guess by picking a height.</li>
+                <li>Think about how much wall you would cover with that height!</li>
+              </ul>
+            </div>
+            <div id="fenceSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Pick a height (maybe 2 meters if it's a garden fence).</li>
+                <li>Remember, area = length × height.</li>
+                <li>You can compare this to the paint can’s instructions.</li>
+              </ul>
+            </div>
+            <p><em>Hint: Try guessing a reasonable height!</em></p>
+            <div class="mb-3">
+              <label for="fenceHeight" class="form-label">Guess the Fence Height (meters):</label>
+              <input type="number" class="form-control interactive-input" id="fenceHeight" value="2">
+            </div>
+            <button class="btn btn-primary" onclick="calculateFence()">Calculate the Painted Area</button>
+            <p id="fenceResult" class="mt-2"></p>
+            <script>
+              function calculateFence() {
+                const length = 32;
+                const height = parseFloat(document.getElementById('fenceHeight').value);
+                if (isNaN(height) || height <= 0) {
+                  document.getElementById('fenceResult').innerText = "Please enter a valid height.";
+                  return;
+                }
+                const area = length * height;
+                document.getElementById('fenceResult').innerText = `You will paint about ${area.toFixed(2)} square meters on one side!`;
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 2: Road Trip Planning -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed problem-header problem-header-2" type="button" data-bs-toggle="collapse" data-bs-target="#problem2" aria-expanded="false" aria-controls="problem2">
+            Problem 2: Road Trip Time! 🚗🛣️
+          </button>
+        </h2>
+        <div id="problem2" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> You're going on a fun road trip! You know how far you'll drive, but you don’t know how many snack breaks you'll take or how long each will be. How can you guess your total travel time?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('roadTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('roadSolutions')">Solutions</button>
+            </div>
+            <div id="roadTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>There are many unknowns like stop times and changes in speed.</li>
+                <li>You can still guess by estimating the numbers.</li>
+              </ul>
+            </div>
+            <div id="roadSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Find the driving time by dividing the distance by your average speed.</li>
+                <li>Guess how often and how long you might stop (like every 2 hours for 30 minutes).</li>
+                <li>Add these times together and include a little extra time for surprises!</li>
+              </ul>
+            </div>
+            <div class="mb-3">
+              <label for="distance" class="form-label">Total Distance (km):</label>
+              <input type="number" class="form-control interactive-input" id="distance" value="300">
+            </div>
+            <div class="mb-3">
+              <label for="avgSpeed" class="form-label">Average Speed (km/h):</label>
+              <input type="number" class="form-control interactive-input" id="avgSpeed" value="80">
+            </div>
+            <div class="mb-3">
+              <label for="stopFrequency" class="form-label">Stop Every (hours):</label>
+              <input type="number" class="form-control interactive-input" id="stopFrequency" value="2">
+            </div>
+            <div class="mb-3">
+              <label for="stopDuration" class="form-label">Each Stop Lasts (minutes):</label>
+              <input type="number" class="form-control interactive-input" id="stopDuration" value="30">
+            </div>
+            <button class="btn btn-primary" onclick="calculateRoadTrip()">Guess Total Trip Time</button>
+            <p id="roadTripResult" class="mt-2"></p>
+            <script>
+              function calculateRoadTrip() {
+                const distance = parseFloat(document.getElementById('distance').value);
+                const avgSpeed = parseFloat(document.getElementById('avgSpeed').value);
+                const stopFrequency = parseFloat(document.getElementById('stopFrequency').value);
+                const stopDuration = parseFloat(document.getElementById('stopDuration').value);
+                if (isNaN(distance) || isNaN(avgSpeed) || avgSpeed <= 0 || isNaN(stopFrequency) || stopFrequency <= 0 || isNaN(stopDuration)) {
+                  document.getElementById('roadTripResult').innerText = "Please enter valid numbers.";
+                  return;
+                }
+                const drivingTime = distance / avgSpeed;
+                const numStops = Math.floor(drivingTime / stopFrequency);
+                const stopTime = (numStops * stopDuration) / 60;
+                const totalTime = drivingTime + stopTime;
+                document.getElementById('roadTripResult').innerText =
+                  `Driving time: ${drivingTime.toFixed(2)} hours, with ${numStops} stops. Total time is about ${totalTime.toFixed(2)} hours (+ a little extra for fun surprises)!`;
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 3: Farm Animals -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed problem-header problem-header-3" type="button" data-bs-toggle="collapse" data-bs-target="#problem3" aria-expanded="false" aria-controls="problem3">
+            Problem 3: Farm Leg Count 🐔🐐🐑
+          </button>
+        </h2>
+        <div id="problem3" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> On a farm, chickens, goats, and sheep have a total of 100 legs. Can you figure out one possible mix of these animals?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('farmTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('farmSolutions')">Solutions</button>
+            </div>
+            <div id="farmTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>Chickens have 2 legs; goats and sheep have 4 legs.</li>
+                <li>There are lots of ways to add up to 100 legs.</li>
+              </ul>
+            </div>
+            <div id="farmSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Start by pretending all animals have 4 legs, then swap some for chickens.</li>
+                <li>Test different numbers until the total leg count is 100.</li>
+              </ul>
+            </div>
+            <div class="mb-3">
+              <label for="goats" class="form-label">Number of Goats:</label>
+              <input type="number" class="form-control interactive-input" id="goats" value="10">
+            </div>
+            <div class="mb-3">
+              <label for="sheep" class="form-label">Number of Sheep:</label>
+              <input type="number" class="form-control interactive-input" id="sheep" value="10">
+            </div>
+            <div class="mb-3">
+              <label for="chickens" class="form-label">Number of Chickens:</label>
+              <input type="number" class="form-control interactive-input" id="chickens" value="10">
+            </div>
+            <button class="btn btn-primary" onclick="calculateLegs()">Check the Leg Count</button>
+            <p id="legResult" class="mt-2"></p>
+            <script>
+              function calculateLegs() {
+                const goats = parseInt(document.getElementById('goats').value);
+                const sheep = parseInt(document.getElementById('sheep').value);
+                const chickens = parseInt(document.getElementById('chickens').value);
+                if (isNaN(goats) || isNaN(sheep) || isNaN(chickens)) {
+                  document.getElementById('legResult').innerText = "Please enter valid numbers.";
+                  return;
+                }
+                const totalLegs = goats * 4 + sheep * 4 + chickens * 2;
+                let message = `Total legs: ${totalLegs}. `;
+                message += (totalLegs === 100) ? "Great! That works!" : "Hmm... That doesn't add up to 100 legs.";
+                document.getElementById('legResult').innerText = message;
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 4: Odd-Shaped Space -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingFour">
+          <button class="accordion-button collapsed problem-header problem-header-4" type="button" data-bs-toggle="collapse" data-bs-target="#problem4" aria-expanded="false" aria-controls="problem4">
+            Problem 4: Measuring Odd Shapes 📏✏️
+          </button>
+        </h2>
+        <div id="problem4" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> You have a funny-shaped room or backyard that isn’t a perfect rectangle. How can you find its area?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('oddTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('oddSolutions')">Solutions</button>
+            </div>
+            <div id="oddTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>There isn’t one simple formula for odd shapes.</li>
+                <li>You can break the shape into smaller, easy-to-measure parts.</li>
+              </ul>
+            </div>
+            <div id="oddSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Divide the space into rectangles and triangles, then add their areas.</li>
+                <li>Use a grid (like graph paper) to count squares.</li>
+                <li>Use the smallest rectangle that can cover the area (bounding box) for a rough guess.</li>
+              </ul>
+            </div>
+            <p>Try drawing your space on paper and breaking it into simple shapes!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 5: Fundraiser Table -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingFive">
+          <button class="accordion-button collapsed problem-header problem-header-5" type="button" data-bs-toggle="collapse" data-bs-target="#problem5" aria-expanded="false" aria-controls="problem5">
+            Problem 5: Fundraiser Feast! 🍪🍉🥤
+          </button>
+        </h2>
+        <div id="problem5" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> You’re setting up a snack table with cookies, fruit cups, and lemonade. Can you think of two or more ways to arrange them so everyone can grab a treat quickly?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('fundTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('fundSolutions')">Solutions</button>
+            </div>
+            <div id="fundTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>Think about how kids line up and grab snacks.</li>
+                <li>There are many good ways—there’s no one best answer!</li>
+              </ul>
+            </div>
+            <div id="fundSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Create separate snack stations so kids don’t crowd one spot.</li>
+                <li>Arrange the treats in a line so everyone goes in order.</li>
+              </ul>
+            </div>
+            <p>Imagine drawing a picture of your snack table!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 6: Grocery Budget -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingSix">
+          <button class="accordion-button collapsed problem-header problem-header-6" type="button" data-bs-toggle="collapse" data-bs-target="#problem6" aria-expanded="false" aria-controls="problem6">
+            Problem 6: $30 Snack Budget 🛒💰
+          </button>
+        </h2>
+        <div id="problem6" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> Your class has $30 to spend on snacks and drinks for a party. The prices are: Chips $3, Soda $2, Cookies $4, and Water $1. You don't know how many friends will come or what they like best. What should you buy?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('groceryTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('grocerySolutions')">Solutions</button>
+            </div>
+            <div id="groceryTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>Not everyone will want the same snack.</li>
+                <li>You need a mix of yummy treats without spending too much.</li>
+              </ul>
+            </div>
+            <div id="grocerySolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Buy more of the snacks that cost less, like water and chips.</li>
+                <li>Plan a mix and be ready to adjust if more friends show up.</li>
+              </ul>
+            </div>
+            <p>Think about what your friends like and how you can share the snacks!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 7: Carnival Game Tickets -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingSeven">
+          <button class="accordion-button collapsed problem-header problem-header-7" type="button" data-bs-toggle="collapse" data-bs-target="#problem7" aria-expanded="false" aria-controls="problem7">
+            Problem 7: Carnival Ticket Pricing 🎟️🎡
+          </button>
+        </h2>
+        <div id="problem7" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> You’re creating a fun carnival game with small toy prizes. How many tickets should a game cost so you don’t run out of toys or have too many left, even though you don’t know how many kids will play?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('carnivalTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('carnivalSolutions')">Solutions</button>
+            </div>
+            <div id="carnivalTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>Figure out a balance so you have just the right number of prizes.</li>
+                <li>Remember, you don’t know exactly how many kids will play.</li>
+              </ul>
+            </div>
+            <div id="carnivalSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Think about the value of each toy and how hard the game is.</li>
+                <li>Start with a moderate number of tickets per game (like 2 or 3) and adjust later if needed.</li>
+              </ul>
+            </div>
+            <p>Plan your game like a mini business—it's all about balance!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 8: Birdhouse Wood -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingEight">
+          <button class="accordion-button collapsed problem-header problem-header-8" type="button" data-bs-toggle="collapse" data-bs-target="#problem8" aria-expanded="false" aria-controls="problem8">
+            Problem 8: Birdhouse Blueprint 🐦🏠
+          </button>
+        </h2>
+        <div id="problem8" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> You have a picture of a birdhouse that shows its height and width. How do you figure out how long to cut each piece of wood to build it?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('birdhouseTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('birdhouseSolutions')">Solutions</button>
+            </div>
+            <div id="birdhouseTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>Imagine how flat pieces turn into a 3D birdhouse.</li>
+                <li>The picture gives clues but not all the details.</li>
+              </ul>
+            </div>
+            <div id="birdhouseSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Break the birdhouse into simple shapes like rectangles and triangles.</li>
+                <li>Use the picture’s measurements as a guide to cut the wood a little extra, then trim to fit.</li>
+              </ul>
+            </div>
+            <p>Think of it as a fun puzzle where you build a home for birds!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 9: Cookie Jar -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingNine">
+          <button class="accordion-button collapsed problem-header problem-header-9" type="button" data-bs-toggle="collapse" data-bs-target="#problem9" aria-expanded="false" aria-controls="problem9">
+            Problem 9: Cookie Count Down! 🍪
+          </button>
+        </h2>
+        <div id="problem9" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> You have 24 cookies in a jar. There are twice as many chocolate chip cookies as oatmeal raisin cookies. How many cookies of each type are there?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('cookieTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('cookieSolutions')">Solutions</button>
+            </div>
+            <div id="cookieTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>For every 1 oatmeal raisin cookie, there are 2 chocolate chip cookies.</li>
+                <li>This gives you a clear ratio to work with.</li>
+              </ul>
+            </div>
+            <div id="cookieSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Divide 24 by 3 (since 1 + 2 = 3 parts) to find the base unit.</li>
+                <li>Then, 1 part is oatmeal raisin and 2 parts are chocolate chip.</li>
+              </ul>
+            </div>
+            <button class="btn btn-primary" onclick="calculateCookies()">Solve the Cookie Puzzle</button>
+            <p id="cookieResult" class="mt-2"></p>
+            <script>
+              function calculateCookies() {
+                const totalCookies = 24;
+                const part = totalCookies / 3;
+                const oatmeal = part;
+                const chocolateChip = 2 * part;
+                document.getElementById('cookieResult').innerText =
+                  `Oatmeal Raisin: ${oatmeal} cookies, Chocolate Chip: ${chocolateChip} cookies.`;
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 10: Garden Design -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingTen">
+          <button class="accordion-button collapsed problem-header problem-header-10" type="button" data-bs-toggle="collapse" data-bs-target="#problem10" aria-expanded="false" aria-controls="problem10">
+            Problem 10: Garden Geometry 🌳🌼
+          </button>
+        </h2>
+        <div id="problem10" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> You have a rectangular garden with a round flower bed in one corner. How do you figure out how much space is left for planting vegetables?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('gardenTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('gardenSolutions')">Solutions</button>
+            </div>
+            <div id="gardenTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>You need to add and subtract areas.</li>
+                <li>Find the area of the whole garden and then take out the flower bed area.</li>
+              </ul>
+            </div>
+            <div id="gardenSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Calculate the area of the rectangle (length × width).</li>
+                <li>If the flower bed is a quarter circle, calculate ¼ × π × r² and subtract it.</li>
+              </ul>
+            </div>
+            <div class="mb-3">
+              <label for="gardenLength" class="form-label">Garden Length (m):</label>
+              <input type="number" class="form-control interactive-input" id="gardenLength" value="10">
+            </div>
+            <div class="mb-3">
+              <label for="gardenWidth" class="form-label">Garden Width (m):</label>
+              <input type="number" class="form-control interactive-input" id="gardenWidth" value="5">
+            </div>
+            <div class="mb-3">
+              <label for="flowerRadius" class="form-label">Flower Bed Radius (m):</label>
+              <input type="number" class="form-control interactive-input" id="flowerRadius" value="2">
+            </div>
+            <button class="btn btn-primary" onclick="calculateGarden()">Find the Veggie Space</button>
+            <p id="gardenResult" class="mt-2"></p>
+            <script>
+              function calculateGarden() {
+                const length = parseFloat(document.getElementById('gardenLength').value);
+                const width = parseFloat(document.getElementById('gardenWidth').value);
+                const r = parseFloat(document.getElementById('flowerRadius').value);
+                if (isNaN(length) || isNaN(width) || isNaN(r) || length <= 0 || width <= 0 || r <= 0) {
+                  document.getElementById('gardenResult').innerText = "Please enter valid positive numbers.";
+                  return;
+                }
+                const totalArea = length * width;
+                const flowerArea = (Math.PI * r * r) / 4;
+                const vegArea = totalArea - flowerArea;
+                document.getElementById('gardenResult').innerText =
+                  `The whole garden is ${totalArea.toFixed(2)} sq.m, the flower bed is ${flowerArea.toFixed(2)} sq.m, so there are ${vegArea.toFixed(2)} sq.m for veggies!`;
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 11: Leaky Faucet -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingEleven">
+          <button class="accordion-button collapsed problem-header problem-header-11" type="button" data-bs-toggle="collapse" data-bs-target="#problem11" aria-expanded="false" aria-controls="problem11">
+            Problem 11: Drip, Drip, Waste! 🚰💧
+          </button>
+        </h2>
+        <div id="problem11" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> A leaky faucet drips water all day long. How can you figure out how much water is wasted in one day without any fancy tools?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('faucetTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('faucetSolutions')">Solutions</button>
+            </div>
+            <div id="faucetTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>Use a cup to catch the drips and a timer to see how fast it fills up.</li>
+                <li>Then guess how many drips happen in a whole day.</li>
+              </ul>
+            </div>
+            <div id="faucetSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Time how long it takes to collect 100 mL of water.</li>
+                <li>Work out the drip rate and multiply it by the number of seconds in a day.</li>
+              </ul>
+            </div>
+            <div class="mb-3">
+              <label for="dripTime" class="form-label">Time to collect 100 mL (seconds):</label>
+              <input type="number" class="form-control interactive-input" id="dripTime" value="100">
+            </div>
+            <button class="btn btn-primary" onclick="calculateFaucet()">Guess Daily Water Waste</button>
+            <p id="faucetResult" class="mt-2"></p>
+            <script>
+              function calculateFaucet() {
+                const dripTime = parseFloat(document.getElementById('dripTime').value);
+                if (isNaN(dripTime) || dripTime <= 0) {
+                  document.getElementById('faucetResult').innerText = "Please enter a valid time.";
+                  return;
+                }
+                const rate = 100 / dripTime;
+                const dailyVolume = rate * 60 * 60 * 24;
+                document.getElementById('faucetResult').innerText =
+                  `About ${dailyVolume.toFixed(0)} mL of water is wasted each day!`;
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 12: School Bus Puzzle -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingTwelve">
+          <button class="accordion-button collapsed problem-header problem-header-12" type="button" data-bs-toggle="collapse" data-bs-target="#problem12" aria-expanded="false" aria-controls="problem12">
+            Problem 12: Bus Stop Mystery! 🚌
+          </button>
+        </h2>
+        <div id="problem12" class="accordion-collapse collapse" aria-labelledby="headingTwelve" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> There are 3 school buses of different sizes, and they’re all full. If you know the total number of students, can you guess how many students each bus holds?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('busTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('busSolutions')">Solutions</button>
+            </div>
+            <div id="busTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>There are many answers because the problem doesn’t give all the details.</li>
+                <li>Think of typical bus sizes (maybe 30 to 70 kids per bus).</li>
+              </ul>
+            </div>
+            <div id="busSolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Guess some numbers for each bus that add up to the total students.</li>
+                <li>Try a few different combinations to see which ones work.</li>
+              </ul>
+            </div>
+            <p>Use your best guess and have fun with it!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 13: Candy Jar Challenge -->
+      <div class="accordion-item problem-card">
+        <h2 class="accordion-header" id="headingThirteen">
+          <button class="accordion-button collapsed problem-header problem-header-13" type="button" data-bs-toggle="collapse" data-bs-target="#problem13" aria-expanded="false" aria-controls="problem13">
+            Problem 13: Candy Counting Conundrum! 🍭🍬
+          </button>
+        </h2>
+        <div id="problem13" class="accordion-collapse collapse" aria-labelledby="headingThirteen" data-bs-parent="#problemsAccordion">
+          <div class="accordion-body">
+            <p><strong>Problem Statement:</strong> There are 50 candies in a jar (lollipops, chocolates, gummy bears), but you can’t count them one by one. How could you guess how many of each type there might be?</p>
+            <!-- Help Buttons -->
+            <div class="help-buttons">
+              <button class="btn btn-info btn-sm" onclick="toggleContent('candyTips')">Tips</button>
+              <button class="btn btn-secondary btn-sm" onclick="toggleContent('candySolutions')">Solutions</button>
+            </div>
+            <div id="candyTips" class="help-section">
+              <p><strong>Thinking About It:</strong></p>
+              <ul>
+                <li>You can’t count every candy, so you need to estimate.</li>
+                <li>Look at what you see: which candies look like there are more or less?</li>
+              </ul>
+            </div>
+            <div id="candySolutions" class="help-section">
+              <p><strong>Possible Ideas:</strong></p>
+              <ul>
+                <li>Estimate the percentage of the jar each candy type fills.</li>
+                <li>If you know the weights, you could compare to get a better guess.</li>
+              </ul>
+            </div>
+            <p>Think of it like a guessing game with your favorite sweets!</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
