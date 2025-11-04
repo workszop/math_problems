@@ -9,15 +9,16 @@
       "statement": "Wyobraź sobie, że masz super długi płot o długości 32 metrów, ale nie wiesz, jaki jest wysoki! Jaką powierzchnię pomalujesz z jednej strony?",
       "tips": [
         "Nie znasz wysokości płotu.",
-        "Nadal możesz zgadnąć, wybierając jakąś wysokość.",
-        "Pomyśl, ile ściany pokryjesz przy tej wysokości!"
+        "Nadal możesz zgadnąć, wybierając jakąś wysokość (typowy płot ogrodowy: 1.2–2.0 m).",
+        "Pamiętaj o jednostkach — wynik podaj w m²."
       ],
       "solutions": [
-        "Wybierz wysokość (może 2 metry, jeśli to płot ogrodowy).",
-        "Pamiętaj, pole = długość × wysokość.",
-        "Możesz porównać to z instrukcją na puszce z farbą."
+        "Wybierz wysokość (np. 1.5 m, 1.8 m lub 2.0 m, jeśli to płot ogrodowy).",
+        "Pamiętaj, pole = długość × wysokość (m × m = m²).",
+        "Porównaj różne wysokości i zobacz, jak zmienia się pole (np. w tabeli).",
+        "Możesz porównać wynik z instrukcją na puszce z farbą."
       ],
-      "hint": "Wskazówka: Spróbuj zgadnąć rozsądną wysokość!",
+      "hint": "Wskazówka: Spróbuj zgadnąć rozsądną wysokość i zapisz wynik w m²!",
       "interactive": {
         "type": "fence",
         "inputs": [
@@ -39,12 +40,13 @@
       "statement": "Wybierasz się w fajną podróż samochodem! Wiesz, jak daleko pojedziesz, ale nie wiesz, ile przerw na przekąski zrobisz ani jak długo będą trwały. Jak możesz zgadnąć całkowity czas podróży?",
       "tips": [
         "Jest wiele niewiadomych, takich jak czas postojów i zmiany prędkości.",
-        "Nadal możesz zgadnąć, szacując liczby."
+        "Średnia prędkość dotyczy czasu JAZDY — przerwy dodajesz osobno."
       ],
       "solutions": [
-        "Znajdź czas jazdy, dzieląc dystans przez średnią prędkość.",
-        "Zgadnij, jak często i jak długo możesz się zatrzymać (np. co 2 godziny na 30 minut).",
-        "Dodaj te czasy razem i uwzględnij trochę dodatkowego czasu na niespodzianki!"
+        "Czas jazdy = dystans / średnia prędkość.",
+        "Zgadnij częstotliwość przerw (np. co 2 h) i czas każdej przerwy (np. 30 min).",
+        "Liczba przerw ≈ floor(czas_jazdy / częstotliwość). Nie dodawaj przerwy „po dojechaniu”.",
+        "Całkowity czas ≈ czas_jazdy + liczba_przerw × czas_przerwy + bufor (np. +10%)."
       ],
       "interactive": {
         "type": "roadTrip",
@@ -85,11 +87,12 @@
       "statement": "Na farmie kury, kozy i owce mają łącznie 100 nóg. Czy potrafisz wymyślić jedno możliwe połączenie tych zwierząt?",
       "tips": [
         "Kury mają 2 nogi; kozy i owce mają 4 nogi.",
-        "Jest wiele sposobów, aby zsumować do 100 nóg."
+        "Jest wiele sposobów, aby zsumować do 100 nóg.",
+        "Uwaga: 2x + 4y = 100 ⇒ liczba kur musi być parzysta (własność parzystości)."
       ],
       "solutions": [
-        "Zacznij od udawania, że wszystkie zwierzęta mają 4 nogi, a następnie zamień niektóre na kury.",
-        "Testuj różne liczby, aż całkowita liczba nóg wyniesie 100."
+        "Zacznij od udawania, że wszystkie zwierzęta mają 4 nogi, a następnie zamień niektóre na kury (każda kura zmniejsza sumę o 2).",
+        "Testuj różne liczby, aż całkowita liczba nóg wyniesie 100; pamiętaj, że liczba kur powinna być parzysta."
       ],
       "interactive": {
         "type": "farmAnimals",
@@ -124,12 +127,13 @@
       "statement": "Masz pokój lub podwórko o dziwnym kształcie, które nie jest idealnym prostokątem. Jak możesz znaleźć jego powierzchnię?",
       "tips": [
         "Nie ma jednego prostego wzoru na dziwne kształty.",
-        "Możesz podzielić kształt na mniejsze, łatwe do zmierzenia części."
+        "Możesz podzielić kształt na mniejsze, łatwe do zmierzenia części.",
+        "Im drobniejsza siatka (mniejsze kwadraty), tym dokładniejszy wynik."
       ],
       "solutions": [
         "Podziel przestrzeń na prostokąty i trójkąty, a następnie dodaj ich powierzchnie.",
-        "Użyj siatki (jak papier milimetrowy) do liczenia kwadratów.",
-        "Użyj najmniejszego prostokąta, który może pokryć obszar (ramka ograniczająca) do przybliżonego oszacowania."
+        "Użyj siatki (jak papier milimetrowy) do liczenia kwadratów; doprecyzuj, co robisz z „połówkami”.",
+        "Użyj najmniejszego prostokąta, który pokrywa obszar (ramka ograniczająca), by uzyskać przybliżenie — potem koryguj dodając/odejmując wystające fragmenty."
       ],
       "hint": "Spróbuj narysować swoją przestrzeń na papierze i podzielić ją na proste kształty!",
       "interactive": null
@@ -141,13 +145,15 @@
       "statement": "Ustawiasz stolik z ciasteczkami, kubkami z owocami i lemoniadą. Czy potrafisz wymyślić dwa lub więcej sposobów, aby je ułożyć tak, żeby wszyscy mogli szybko wziąć smakołyk?",
       "tips": [
         "Pomyśl o tym, jak dzieci ustawiają się w kolejce i biorą przekąski.",
-        "Jest wiele dobrych sposobów - nie ma jednej najlepszej odpowiedzi!"
+        "Jest wiele dobrych sposobów - nie ma jednej najlepszej odpowiedzi!",
+        "Ustal kryterium: np. minimalna średnia długość kolejki lub maksymalny przepływ osób/min."
       ],
       "solutions": [
-        "Stwórz oddzielne stanowiska z przekąskami, aby dzieci nie tłoczyły się w jednym miejscu.",
-        "Ułóż smakołyki w linii, aby wszyscy szli po kolei."
+        "Stwórz oddzielne stanowiska z przekąskami, aby dzieci nie tłoczyły się w jednym miejscu (równoległe linie).",
+        "Ułóż smakołyki w jednej linii, aby wszyscy szli po kolei (szeregowo).",
+        "Przetestuj 2–3 układy „na sucho” (np. 10 osób przychodzi naraz) i wybierz szybszy wg przyjętego kryterium."
       ],
-      "hint": "Wyobraź sobie, że rysujesz swój stolik ze smakołykami!",
+      "hint": "Wyobraź sobie, że rysujesz swój stolik i strzałkami zaznaczasz kierunek ruchu.",
       "interactive": null
     },
     {
@@ -157,13 +163,14 @@
       "statement": "Twoja klasa ma 30 zł do wydania na przekąski i napoje na imprezę. Ceny są następujące: Chipsy 3 zł, Napój gazowany 2 zł, Ciasteczka 4 zł i Woda 1 zł. Nie wiesz, ilu przyjaciół przyjdzie ani co lubią najbardziej. Co powinieneś kupić?",
       "tips": [
         "Nie wszyscy będą chcieli tej samej przekąski.",
-        "Potrzebujesz mieszanki pysznych smakołyków bez wydawania zbyt dużo."
+        "Cel: wydać prawie cały budżet (≈30 zł) i zapewnić zróżnicowanie; np. co najmniej 1 napój na 2 osoby."
       ],
       "solutions": [
-        "Kup więcej przekąsek, które kosztują mniej, takich jak woda i chipsy.",
-        "Zaplanuj mieszankę i bądź gotowy do dostosowania, jeśli przyjdzie więcej przyjaciół."
+        "Strategia „tani mix”: 6× chipsy (6×3=18), 6× woda (6×1=6), 3× napój (3×2=6) — razem 30 zł.",
+        "Strategia „zbilansowana”: 4× ciasteczka (4×4=16), 4× chipsy (4×3=12), 2× woda (2×1=2) — razem 30 zł.",
+        "Obserwuj preferencje i koryguj w trakcie (zamiana 1:1 w budżecie)."
       ],
-      "hint": "Pomyśl o tym, co lubią twoi przyjaciele i jak możesz podzielić się przekąskami!",
+      "hint": "Zrób listę zakupów tak, by suma cen była jak najbliżej 30 zł.",
       "interactive": null
     },
     {
@@ -172,14 +179,15 @@
       "colorClass": "problem-header-7",
       "statement": "Tworzysz zabawną karnawałową grę z małymi zabawkowymi nagrodami. Ile biletów powinna kosztować gra, aby nie zabrakło ci zabawek ani nie zostało ich zbyt wiele, mimo że nie wiesz, ile dzieci będzie grało?",
       "tips": [
-        "Znajdź równowagę, aby mieć dokładnie odpowiednią liczbę nagród.",
-        "Pamiętaj, że nie wiesz dokładnie, ile dzieci będzie grało."
+        "Znajdź równowagę między liczbą nagród (S) a oczekiwaną liczbą gier (G).",
+        "Oszacuj prawdopodobieństwo wygranej p (np. 20–40%) oraz popyt (G rośnie przy niższej cenie)."
       ],
       "solutions": [
-        "Pomyśl o wartości każdej zabawki i o tym, jak trudna jest gra.",
-        "Zacznij od umiarkowanej liczby biletów na grę (np. 2 lub 3) i dostosuj później, jeśli to konieczne."
+        "Załóż S (np. 60 nagród) i p (np. 30%). Oczekiwane wygrane ≈ p × G ≤ S ⇒ G ≤ S/p (tu ok. 200 gier).",
+        "Ustal cenę biletową tak, by oczekiwane G mieściło się w limicie (np. start od 2–3 biletów i obserwuj kolejki).",
+        "Jeśli nagrody znikają zbyt szybko, podnieś cenę lub obniż p (utrudnij grę); jeśli zostaje dużo, odwrotnie."
       ],
-      "hint": "Zaplanuj swoją grę jak mini biznes - wszystko jest kwestią równowagi!",
+      "hint": "Pomyśl o tym jak o mini-biznesie z zapasem i popytem — testuj i koryguj!",
       "interactive": null
     },
     {
@@ -189,46 +197,66 @@
       "statement": "Masz zdjęcie budki dla ptaków, które pokazuje jej wysokość i szerokość. Jak ustalić, jak długo ciąć każdy kawałek drewna, aby ją zbudować?",
       "tips": [
         "Wyobraź sobie, jak płaskie kawałki zamieniają się w trójwymiarową budkę dla ptaków.",
-        "Zdjęcie daje wskazówki, ale nie wszystkie szczegóły."
+        "Zdjęcie daje wskazówki, ale nie wszystkie szczegóły.",
+        "Weź pod uwagę grubość desek, kąt dachu oraz szerokość rzazu (kerf) piły."
       ],
       "solutions": [
         "Podziel budkę dla ptaków na proste kształty, takie jak prostokąty i trójkąty.",
-        "Użyj wymiarów ze zdjęcia jako przewodnika, aby przeciąć drewno z niewielkim zapasem, a następnie przytnij do dopasowania."
+        "Użyj wymiarów ze zdjęcia jako przewodnika, dodaj 5–10 mm zapasu na docinanie i dopasowanie.",
+        "Zapisz wymiary każdego elementu z uwzględnieniem grubości materiału oraz kątów łączeń."
       ],
-      "hint": "Pomyśl o tym jako o zabawnej układance, w której budujesz dom dla ptaków!",
+      "hint": "Pomyśl o tym jako o zabawnej układance 3D, w której każdy element musi pasować do sąsiadów.",
       "interactive": null
     },
     {
       "id": 9,
-      "title": "Odliczanie ciasteczek! 🍪",
+      "title": "Zagadka słoika z ciasteczkami! 🍪🧐",
       "colorClass": "problem-header-9",
-      "statement": "Masz 24 ciasteczka w słoiku. Jest dwa razy więcej ciasteczek z kawałkami czekolady niż ciasteczek owsianych z rodzynkami. Ile jest ciasteczek każdego rodzaju?",
+      "statement": "W słoiku jest *około 24* ciasteczek. Nie licząc ich, widzisz, że ciasteczek z kawałkami czekolady jest *znacznie więcej* niż owsianych z rodzynkami. Jak myślisz, ile może być ciasteczek każdego rodzaju? Spróbuj podać dwa różne pomysły.",
       "tips": [
-        "Na każde 1 ciasteczko owsiane z rodzynkami przypada 2 ciasteczka z kawałkami czekolady.",
-        "To daje ci wyraźny stosunek do pracy."
+        "Nie ma jednej 'poprawnej' odpowiedzi. Zdefiniuj, co dla Ciebie znaczy 'około' oraz 'znacznie więcej'.",
+        "Przykładowe definicje: 'około 24' = 23–25; 'znacznie więcej' = co najmniej 50% więcej lub co najmniej +8 szt."
       ],
       "solutions": [
-        "Podziel 24 przez 3 (ponieważ 1 + 2 = 3 części), aby znaleźć jednostkę bazową.",
-        "Następnie 1 część to ciasteczka owsiane z rodzynkami, a 2 części to ciasteczka z kawałkami czekolady."
+        "Wariant A (dokładnie 24; +50%): 16 czekoladowych i 8 owsianych.",
+        "Wariant B (dokładnie 24; różnica ≥ 8): 18 czekoladowych i 6 owsianych.",
+        "Wariant C (około 23–25): np. 17/7 (24), 15/8 (23), 19/6 (25)."
       ],
       "interactive": {
-        "type": "cookies",
-        "buttonText": "Rozwiąż zagadkę ciasteczkową",
-        "resultId": "cookieResult"
+        "type": "cookiesEstimate",
+        "inputs": [
+          {
+            "id": "chocoCookies",
+            "label": "Zgadnij liczbę czekoladowych:",
+            "type": "number",
+            "defaultValue": 16
+          },
+          {
+            "id": "oatCookies",
+            "label": "Zgadnij liczbę owsianych:",
+            "type": "number",
+            "defaultValue": 8
+          }
+        ],
+        "buttonText": "Sprawdź swoje założenia",
+        "resultId": "cookieEstimateResult"
       }
     },
     {
       "id": 10,
-      "title": "Geometria ogrodu 🌳🌼",
+      "title": "Planowanie ogrodu 🌳🌼",
       "colorClass": "problem-header-10",
-      "statement": "Masz prostokątny ogród z okrągłym kwietnikiem w jednym rogu. Jak ustalić, ile miejsca zostało na sadzenie warzyw?",
+      "statement": "Masz prostokątny ogród o wymiarach 10 metrów na 5 metrów. Chcesz w jednym rogu zasadzić okrągły kwietnik. Jak duży może być ten kwietnik i ile miejsca zostanie Ci na warzywa? Podaj przynajmniej dwa różne plany.",
       "tips": [
-        "Musisz dodawać i odejmować powierzchnie.",
-        "Znajdź powierzchnię całego ogrodu, a następnie odejmij powierzchnię kwietnika."
+        "To Ty decydujesz, jak duży będzie promień kwietnika!",
+        "Pamiętaj, że kwietnik jest w rogu, więc jego pole to ćwiartka koła.",
+        "Promień nie może przekroczyć krótszego boku ogrodu: r ≤ 5 m."
       ],
       "solutions": [
-        "Oblicz powierzchnię prostokąta (długość × szerokość).",
-        "Jeśli kwietnik to ćwiartka koła, oblicz ¼ × π × r² i odejmij to."
+        "Całkowita powierzchnia ogrodu to 10 × 5 = 50 m².",
+        "Plan 1: r = 2 m ⇒ pole kwietnika = (1/4)·π·2² ≈ 3.14 m²; zostaje 50 − 3.14 = 46.86 m².",
+        "Plan 2: r = 4 m ⇒ pole kwietnika ≈ 12.56 m²; zostaje 37.44 m².",
+        "Plan 3 (skrajny): r = 5 m ⇒ pole kwietnika = (1/4)·π·25 ≈ 19.63 m²; zostaje ≈ 30.37 m²."
       ],
       "interactive": {
         "type": "garden",
@@ -237,22 +265,24 @@
             "id": "gardenLength",
             "label": "Długość ogrodu (m):",
             "type": "number",
-            "defaultValue": 10
+            "defaultValue": 10,
+            "readOnly": true
           },
           {
             "id": "gardenWidth",
             "label": "Szerokość ogrodu (m):",
             "type": "number",
-            "defaultValue": 5
+            "defaultValue": 5,
+            "readOnly": true
           },
           {
             "id": "flowerRadius",
-            "label": "Promień kwietnika (m):",
+            "label": "Wybierz promień kwietnika (m):",
             "type": "number",
             "defaultValue": 2
           }
         ],
-        "buttonText": "Znajdź miejsce na warzywa",
+        "buttonText": "Oblicz, ile zostanie miejsca",
         "resultId": "gardenResult"
       }
     },
@@ -266,8 +296,9 @@
         "Następnie zgadnij, ile kropli pojawi się w ciągu całego dnia."
       ],
       "solutions": [
-        "Zmierz, ile czasu zajmuje zebranie 100 ml wody.",
-        "Oblicz tempo kapania i pomnóż je przez liczbę sekund w ciągu dnia."
+        "Zmierz, ile czasu zajmuje zebranie 100 ml wody (t_100ml w sekundach).",
+        "Szacunek dobowy w litrach: V_doba[L] = (86400 / t_100ml[s]) × 0.1.",
+        "Pamiętaj o błędach: kapanie bywa nieregularne i może się zmieniać w ciągu dnia."
       ],
       "interactive": {
         "type": "faucet",
@@ -290,13 +321,13 @@
       "statement": "Są 3 autobusy szkolne o różnych rozmiarach i wszystkie są pełne. Jeśli znasz całkowitą liczbę uczniów, czy możesz zgadnąć, ilu uczniów mieści każdy autobus?",
       "tips": [
         "Jest wiele odpowiedzi, ponieważ problem nie podaje wszystkich szczegółów.",
-        "Pomyśl o typowych rozmiarach autobusów (może od 30 do 70 dzieci na autobus)."
+        "Typowe pojemności mieszczą się mniej więcej w zakresie 30–70 miejsc na autobus."
       ],
       "solutions": [
-        "Zgadnij kilka liczb dla każdego autobusu, które zsumują się do całkowitej liczby uczniów.",
-        "Wypróbuj kilka różnych kombinacji, aby zobaczyć, które działają."
+        "Wybierz trzy liczby z zakresu 30–70, które sumują się do całkowitej liczby uczniów (i potraktuj to jako jeden możliwy podział).",
+        "Znajdź dwa różne podziały tej samej sumy, aby pokazać, że rozwiązań jest więcej niż jedno."
       ],
-      "hint": "Użyj swojego najlepszego domysłu i baw się dobrze!",
+      "hint": "Spróbuj dwóch różnych kombinacji, które dają tę samą sumę — obie będą poprawne!",
       "interactive": null
     },
     {
@@ -306,13 +337,15 @@
       "statement": "W słoiku jest 50 cukierków (lizaki, czekoladki, żelki), ale nie możesz ich liczyć pojedynczo. Jak możesz zgadnąć, ile może być każdego rodzaju?",
       "tips": [
         "Nie możesz policzyć każdego cukierka, więc musisz oszacować.",
-        "Spójrz na to, co widzisz: których cukierków wygląda na to, że jest więcej lub mniej?"
+        "Spójrz na to, co widzisz: których cukierków wygląda na to, że jest więcej lub mniej?",
+        "Możesz użyć próbkowania: policz proporcje w garści i oszacuj liczbę garści w słoiku albo użyj ważenia (masa pełnego − masa pustego)."
       ],
       "solutions": [
-        "Oszacuj procent słoika, który wypełnia każdy rodzaj cukierka.",
-        "Jeśli znasz wagi, możesz porównać, aby uzyskać lepsze oszacowanie."
+        "Oszacuj procent słoika, który wypełnia każdy rodzaj cukierka, a następnie przemnóż przez 50.",
+        "Jeśli znasz przybliżone masy jednej sztuki, porównaj z masą całkowitą, by zweryfikować oszacowanie.",
+        "Zapisz dwa różne sensowne rozkłady, np. (20/15/15) oraz (25/10/15)."
       ],
-      "hint": "Pomyśl o tym jak o grze w zgadywanie z twoimi ulubionymi słodyczami!",
+      "hint": "To gra w estymację: pokaż dwa różne, ale uzasadnione wyniki i wytłumacz, skąd się biorą.",
       "interactive": null
     }
   ]
