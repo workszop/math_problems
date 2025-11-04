@@ -1,0 +1,319 @@
+{
+  "pageTitle": "Zabawne zadania matematyczne dla dzieci",
+  "pageDescription": "Wybierz zadanie poniżej, aby przeczytać, wypróbować interaktywne narzędzia i poznać fajne wskazówki i pomysły!",
+  "problems": [
+    {
+      "id": 1,
+      "title": "Dylemat z płotem 🎨🖌️",
+      "colorClass": "problem-header-1",
+      "statement": "Wyobraź sobie, że masz super długi płot o długości 32 metrów, ale nie wiesz, jaki jest wysoki! Jaką powierzchnię pomalujesz z jednej strony?",
+      "tips": [
+        "Nie znasz wysokości płotu.",
+        "Nadal możesz zgadnąć, wybierając jakąś wysokość.",
+        "Pomyśl, ile ściany pokryjesz przy tej wysokości!"
+      ],
+      "solutions": [
+        "Wybierz wysokość (może 2 metry, jeśli to płot ogrodowy).",
+        "Pamiętaj, pole = długość × wysokość.",
+        "Możesz porównać to z instrukcją na puszce z farbą."
+      ],
+      "hint": "Wskazówka: Spróbuj zgadnąć rozsądną wysokość!",
+      "interactive": {
+        "type": "fence",
+        "inputs": [
+          {
+            "id": "fenceHeight",
+            "label": "Zgadnij wysokość płotu (metry):",
+            "type": "number",
+            "defaultValue": 2
+          }
+        ],
+        "buttonText": "Oblicz malowaną powierzchnię",
+        "resultId": "fenceResult"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Czas na podróż! 🚗🛣️",
+      "colorClass": "problem-header-2",
+      "statement": "Wybierasz się w fajną podróż samochodem! Wiesz, jak daleko pojedziesz, ale nie wiesz, ile przerw na przekąski zrobisz ani jak długo będą trwały. Jak możesz zgadnąć całkowity czas podróży?",
+      "tips": [
+        "Jest wiele niewiadomych, takich jak czas postojów i zmiany prędkości.",
+        "Nadal możesz zgadnąć, szacując liczby."
+      ],
+      "solutions": [
+        "Znajdź czas jazdy, dzieląc dystans przez średnią prędkość.",
+        "Zgadnij, jak często i jak długo możesz się zatrzymać (np. co 2 godziny na 30 minut).",
+        "Dodaj te czasy razem i uwzględnij trochę dodatkowego czasu na niespodzianki!"
+      ],
+      "interactive": {
+        "type": "roadTrip",
+        "inputs": [
+          {
+            "id": "distance",
+            "label": "Całkowity dystans (km):",
+            "type": "number",
+            "defaultValue": 300
+          },
+          {
+            "id": "avgSpeed",
+            "label": "Średnia prędkość (km/h):",
+            "type": "number",
+            "defaultValue": 80
+          },
+          {
+            "id": "stopFrequency",
+            "label": "Przystanek co (godziny):",
+            "type": "number",
+            "defaultValue": 2
+          },
+          {
+            "id": "stopDuration",
+            "label": "Każdy przystanek trwa (minuty):",
+            "type": "number",
+            "defaultValue": 30
+          }
+        ],
+        "buttonText": "Zgadnij całkowity czas podróży",
+        "resultId": "roadTripResult"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Liczenie nóg na farmie 🐔🐐🐑",
+      "colorClass": "problem-header-3",
+      "statement": "Na farmie kury, kozy i owce mają łącznie 100 nóg. Czy potrafisz wymyślić jedno możliwe połączenie tych zwierząt?",
+      "tips": [
+        "Kury mają 2 nogi; kozy i owce mają 4 nogi.",
+        "Jest wiele sposobów, aby zsumować do 100 nóg."
+      ],
+      "solutions": [
+        "Zacznij od udawania, że wszystkie zwierzęta mają 4 nogi, a następnie zamień niektóre na kury.",
+        "Testuj różne liczby, aż całkowita liczba nóg wyniesie 100."
+      ],
+      "interactive": {
+        "type": "farmAnimals",
+        "inputs": [
+          {
+            "id": "goats",
+            "label": "Liczba kóz:",
+            "type": "number",
+            "defaultValue": 10
+          },
+          {
+            "id": "sheep",
+            "label": "Liczba owiec:",
+            "type": "number",
+            "defaultValue": 10
+          },
+          {
+            "id": "chickens",
+            "label": "Liczba kur:",
+            "type": "number",
+            "defaultValue": 10
+          }
+        ],
+        "buttonText": "Sprawdź liczbę nóg",
+        "resultId": "legResult"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Mierzenie dziwnych kształtów 📏✏️",
+      "colorClass": "problem-header-4",
+      "statement": "Masz pokój lub podwórko o dziwnym kształcie, które nie jest idealnym prostokątem. Jak możesz znaleźć jego powierzchnię?",
+      "tips": [
+        "Nie ma jednego prostego wzoru na dziwne kształty.",
+        "Możesz podzielić kształt na mniejsze, łatwe do zmierzenia części."
+      ],
+      "solutions": [
+        "Podziel przestrzeń na prostokąty i trójkąty, a następnie dodaj ich powierzchnie.",
+        "Użyj siatki (jak papier milimetrowy) do liczenia kwadratów.",
+        "Użyj najmniejszego prostokąta, który może pokryć obszar (ramka ograniczająca) do przybliżonego oszacowania."
+      ],
+      "hint": "Spróbuj narysować swoją przestrzeń na papierze i podzielić ją na proste kształty!",
+      "interactive": null
+    },
+    {
+      "id": 5,
+      "title": "Uczta na zbiórce! 🍪🍉🥤",
+      "colorClass": "problem-header-5",
+      "statement": "Ustawiasz stolik z ciasteczkami, kubkami z owocami i lemoniadą. Czy potrafisz wymyślić dwa lub więcej sposobów, aby je ułożyć tak, żeby wszyscy mogli szybko wziąć smakołyk?",
+      "tips": [
+        "Pomyśl o tym, jak dzieci ustawiają się w kolejce i biorą przekąski.",
+        "Jest wiele dobrych sposobów - nie ma jednej najlepszej odpowiedzi!"
+      ],
+      "solutions": [
+        "Stwórz oddzielne stanowiska z przekąskami, aby dzieci nie tłoczyły się w jednym miejscu.",
+        "Ułóż smakołyki w linii, aby wszyscy szli po kolei."
+      ],
+      "hint": "Wyobraź sobie, że rysujesz swój stolik ze smakołykami!",
+      "interactive": null
+    },
+    {
+      "id": 6,
+      "title": "Budżet 30 zł na przekąski 🛒💰",
+      "colorClass": "problem-header-6",
+      "statement": "Twoja klasa ma 30 zł do wydania na przekąski i napoje na imprezę. Ceny są następujące: Chipsy 3 zł, Napój gazowany 2 zł, Ciasteczka 4 zł i Woda 1 zł. Nie wiesz, ilu przyjaciół przyjdzie ani co lubią najbardziej. Co powinieneś kupić?",
+      "tips": [
+        "Nie wszyscy będą chcieli tej samej przekąski.",
+        "Potrzebujesz mieszanki pysznych smakołyków bez wydawania zbyt dużo."
+      ],
+      "solutions": [
+        "Kup więcej przekąsek, które kosztują mniej, takich jak woda i chipsy.",
+        "Zaplanuj mieszankę i bądź gotowy do dostosowania, jeśli przyjdzie więcej przyjaciół."
+      ],
+      "hint": "Pomyśl o tym, co lubią twoi przyjaciele i jak możesz podzielić się przekąskami!",
+      "interactive": null
+    },
+    {
+      "id": 7,
+      "title": "Ceny biletów karnawałowych 🎟️🎡",
+      "colorClass": "problem-header-7",
+      "statement": "Tworzysz zabawną karnawałową grę z małymi zabawkowymi nagrodami. Ile biletów powinna kosztować gra, aby nie zabrakło ci zabawek ani nie zostało ich zbyt wiele, mimo że nie wiesz, ile dzieci będzie grało?",
+      "tips": [
+        "Znajdź równowagę, aby mieć dokładnie odpowiednią liczbę nagród.",
+        "Pamiętaj, że nie wiesz dokładnie, ile dzieci będzie grało."
+      ],
+      "solutions": [
+        "Pomyśl o wartości każdej zabawki i o tym, jak trudna jest gra.",
+        "Zacznij od umiarkowanej liczby biletów na grę (np. 2 lub 3) i dostosuj później, jeśli to konieczne."
+      ],
+      "hint": "Zaplanuj swoją grę jak mini biznes - wszystko jest kwestią równowagi!",
+      "interactive": null
+    },
+    {
+      "id": 8,
+      "title": "Plan budki dla ptaków 🐦🏠",
+      "colorClass": "problem-header-8",
+      "statement": "Masz zdjęcie budki dla ptaków, które pokazuje jej wysokość i szerokość. Jak ustalić, jak długo ciąć każdy kawałek drewna, aby ją zbudować?",
+      "tips": [
+        "Wyobraź sobie, jak płaskie kawałki zamieniają się w trójwymiarową budkę dla ptaków.",
+        "Zdjęcie daje wskazówki, ale nie wszystkie szczegóły."
+      ],
+      "solutions": [
+        "Podziel budkę dla ptaków na proste kształty, takie jak prostokąty i trójkąty.",
+        "Użyj wymiarów ze zdjęcia jako przewodnika, aby przeciąć drewno z niewielkim zapasem, a następnie przytnij do dopasowania."
+      ],
+      "hint": "Pomyśl o tym jako o zabawnej układance, w której budujesz dom dla ptaków!",
+      "interactive": null
+    },
+    {
+      "id": 9,
+      "title": "Odliczanie ciasteczek! 🍪",
+      "colorClass": "problem-header-9",
+      "statement": "Masz 24 ciasteczka w słoiku. Jest dwa razy więcej ciasteczek z kawałkami czekolady niż ciasteczek owsianych z rodzynkami. Ile jest ciasteczek każdego rodzaju?",
+      "tips": [
+        "Na każde 1 ciasteczko owsiane z rodzynkami przypada 2 ciasteczka z kawałkami czekolady.",
+        "To daje ci wyraźny stosunek do pracy."
+      ],
+      "solutions": [
+        "Podziel 24 przez 3 (ponieważ 1 + 2 = 3 części), aby znaleźć jednostkę bazową.",
+        "Następnie 1 część to ciasteczka owsiane z rodzynkami, a 2 części to ciasteczka z kawałkami czekolady."
+      ],
+      "interactive": {
+        "type": "cookies",
+        "buttonText": "Rozwiąż zagadkę ciasteczkową",
+        "resultId": "cookieResult"
+      }
+    },
+    {
+      "id": 10,
+      "title": "Geometria ogrodu 🌳🌼",
+      "colorClass": "problem-header-10",
+      "statement": "Masz prostokątny ogród z okrągłym kwietnikiem w jednym rogu. Jak ustalić, ile miejsca zostało na sadzenie warzyw?",
+      "tips": [
+        "Musisz dodawać i odejmować powierzchnie.",
+        "Znajdź powierzchnię całego ogrodu, a następnie odejmij powierzchnię kwietnika."
+      ],
+      "solutions": [
+        "Oblicz powierzchnię prostokąta (długość × szerokość).",
+        "Jeśli kwietnik to ćwiartka koła, oblicz ¼ × π × r² i odejmij to."
+      ],
+      "interactive": {
+        "type": "garden",
+        "inputs": [
+          {
+            "id": "gardenLength",
+            "label": "Długość ogrodu (m):",
+            "type": "number",
+            "defaultValue": 10
+          },
+          {
+            "id": "gardenWidth",
+            "label": "Szerokość ogrodu (m):",
+            "type": "number",
+            "defaultValue": 5
+          },
+          {
+            "id": "flowerRadius",
+            "label": "Promień kwietnika (m):",
+            "type": "number",
+            "defaultValue": 2
+          }
+        ],
+        "buttonText": "Znajdź miejsce na warzywa",
+        "resultId": "gardenResult"
+      }
+    },
+    {
+      "id": 11,
+      "title": "Kap, kap, marnowanie! 🚰💧",
+      "colorClass": "problem-header-11",
+      "statement": "Cieknący kran kapie wodą przez cały dzień. Jak możesz ustalić, ile wody jest marnowane w ciągu jednego dnia bez żadnych wymyślnych narzędzi?",
+      "tips": [
+        "Użyj kubka, aby złapać krople i zegara, aby zobaczyć, jak szybko się napełnia.",
+        "Następnie zgadnij, ile kropli pojawi się w ciągu całego dnia."
+      ],
+      "solutions": [
+        "Zmierz, ile czasu zajmuje zebranie 100 ml wody.",
+        "Oblicz tempo kapania i pomnóż je przez liczbę sekund w ciągu dnia."
+      ],
+      "interactive": {
+        "type": "faucet",
+        "inputs": [
+          {
+            "id": "dripTime",
+            "label": "Czas na zebranie 100 ml (sekundy):",
+            "type": "number",
+            "defaultValue": 100
+          }
+        ],
+        "buttonText": "Oszacuj dzienne marnowanie wody",
+        "resultId": "faucetResult"
+      }
+    },
+    {
+      "id": 12,
+      "title": "Tajemnica przystanku autobusowego! 🚌",
+      "colorClass": "problem-header-12",
+      "statement": "Są 3 autobusy szkolne o różnych rozmiarach i wszystkie są pełne. Jeśli znasz całkowitą liczbę uczniów, czy możesz zgadnąć, ilu uczniów mieści każdy autobus?",
+      "tips": [
+        "Jest wiele odpowiedzi, ponieważ problem nie podaje wszystkich szczegółów.",
+        "Pomyśl o typowych rozmiarach autobusów (może od 30 do 70 dzieci na autobus)."
+      ],
+      "solutions": [
+        "Zgadnij kilka liczb dla każdego autobusu, które zsumują się do całkowitej liczby uczniów.",
+        "Wypróbuj kilka różnych kombinacji, aby zobaczyć, które działają."
+      ],
+      "hint": "Użyj swojego najlepszego domysłu i baw się dobrze!",
+      "interactive": null
+    },
+    {
+      "id": 13,
+      "title": "Zagadka liczenia cukierków! 🍭🍬",
+      "colorClass": "problem-header-13",
+      "statement": "W słoiku jest 50 cukierków (lizaki, czekoladki, żelki), ale nie możesz ich liczyć pojedynczo. Jak możesz zgadnąć, ile może być każdego rodzaju?",
+      "tips": [
+        "Nie możesz policzyć każdego cukierka, więc musisz oszacować.",
+        "Spójrz na to, co widzisz: których cukierków wygląda na to, że jest więcej lub mniej?"
+      ],
+      "solutions": [
+        "Oszacuj procent słoika, który wypełnia każdy rodzaj cukierka.",
+        "Jeśli znasz wagi, możesz porównać, aby uzyskać lepsze oszacowanie."
+      ],
+      "hint": "Pomyśl o tym jak o grze w zgadywanie z twoimi ulubionymi słodyczami!",
+      "interactive": null
+    }
+  ]
+}
