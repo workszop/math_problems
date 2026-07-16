@@ -22,3 +22,5 @@ Następnie otwórz `http://localhost:8000`.
 Postęp jest zapisywany w pamięci lokalnej przeglądarki. Aplikacja nie wymaga budowania ani instalowania pakietów.
 
 Interfejs jest dostępny po polsku i angielsku. Polski jest językiem domyślnym, a wybór `PL / EN` jest zapamiętywany w przeglądarce.
+
+Strona `guide.html` zawiera polski poradnik „Jak rozwiązywać trudne zadania matematyczne?” z praktycznymi strategiami i listą kroków pomocnych, gdy uczeń utknie.
