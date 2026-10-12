@@ -25,8 +25,8 @@ let state = loadState();
 // ─── DOM refs ───
 const app = document.getElementById("app");
 const homeLink = document.getElementById("homeLink");
-const brandName = document.getElementById("brandName");
-const headerNote = document.getElementById("headerNote");
+const appLink = document.getElementById("appLink");
+const appNav = appLink.closest("nav");
 const guideLink = document.getElementById("guideLink");
 const languageSwitch = document.getElementById("languageSwitch");
 
@@ -127,10 +127,10 @@ function activeWork() {
 // ─── Render ───
 function updateLanguageChrome() {
   document.documentElement.lang = language;
-  brandName.textContent = t("brand");
   homeLink.setAttribute("aria-label", t("homeLabel"));
-  headerNote.textContent = t("headerNote");
+  appLink.textContent = t("navApp");
   guideLink.textContent = t("guideLink");
+  appNav.setAttribute("aria-label", t("navLabel"));
   languageSwitch.setAttribute("aria-label", t("languageLabel"));
   languageSwitch.querySelectorAll("[data-language]").forEach(button => {
     button.setAttribute("aria-pressed", String(button.dataset.language === language));
@@ -138,62 +138,65 @@ function updateLanguageChrome() {
   app.dataset.lang = language;
 }
 
-function footerNote(text) {
-  return storageAvailable
-    ? `<p class="footer-note">${text}</p>`
-    : `<p class="footer-note footer-note--warn" role="status">${t("storageOff")}</p><p class="footer-note">${text}</p>`;
+function storageWarning() {
+  return storageAvailable ? "" : `<p class="callout callout--red edu-block" role="status">${t("storageOff")}</p>`;
 }
 
 function renderHome() {
   state.activeProblem = null;
   saveState();
   document.title = t("pageTitle");
-  app.className = "shell";
+  app.className = "page";
   app.dataset.view = "home";
   app.dataset.storage = storageAvailable ? "ok" : "off";
   delete app.dataset.problem;
   delete app.dataset.activeStep;
   delete app.dataset.completed;
   app.innerHTML = `
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">${t("heroEyebrow")}</p>
-        <h1>${t("heroTitle")}</h1>
-        <p class="hero-lead">${t("heroLead")}</p>
-      </div>
-      <aside class="method-card" aria-labelledby="methodTitle">
-        <h2 id="methodTitle">${t("loopTitle")}</h2>
-        <ol class="method-list">
-          ${STEPS[language].map((step, index) => `<li><span>${index + 1}</span><div><strong>${step.title}</strong><small>${step.purpose}</small></div></li>`).join("")}
+    <header class="page-head">
+      <h1 class="app-title">${t("heroTitle")}</h1>
+      <p class="edu-lead">${t("heroLead")}</p>
+    </header>
+
+    <section class="sec" aria-labelledby="methodTitle">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="methodTitle">${t("loopTitle")}</h2></div>
+        <ol class="method-grid">
+          ${STEPS[language].map((step, index) => `
+            <li class="card">
+              <div class="card-head"><span class="edu-overline">${t("stepLabel")(index + 1)}</span></div>
+              <div class="card-body"><h3>${step.title}</h3><p>${step.purpose}</p></div>
+            </li>`).join("")}
         </ol>
-      </aside>
-    </section>
-
-    <div class="intro-strip">
-      <span class="spark" aria-hidden="true">✦</span>
-      <div><strong>${t("noKeyTitle")}</strong><p>${t("noKeyText")}</p></div>
-    </div>
-
-    <section aria-labelledby="chooseTitle">
-      <div class="section-heading">
-        <h2 id="chooseTitle">${t("chooseTitle")}</h2>
-        <p>${t("chooseText")}</p>
-      </div>
-      <div class="problem-grid">
-        ${PROBLEMS.map(problem => {
-          const content = problem[language];
-          const saved = hasSavedWork(problem.id) ? `<span class="saved">${t("saved")(completedCount(normalizeWork(state.work[problem.id])))}</span>` : "";
-          return `
-          <button class="problem-card" type="button" data-problem="${problem.id}">
-            <span class="emoji" aria-hidden="true">${problem.emoji}</span>
-            <h3>${content.title}</h3>
-            <p>${content.teaser}</p>
-            <footer><span class="tag">${content.tag}</span>${saved}</footer>
-          </button>`;
-        }).join("")}
+        <div class="callout callout--yellow edu-block">
+          <strong>${t("noKeyTitle")}</strong>
+          <p>${t("noKeyText")}</p>
+        </div>
       </div>
     </section>
-    ${footerNote(t("browserSave"))}
+
+    <section class="sec" aria-labelledby="chooseTitle">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="chooseTitle">${t("chooseTitle")}</h2></div>
+        <p class="sec-lead">${t("chooseText")}</p>
+        <div class="problem-grid">
+          ${PROBLEMS.map(problem => {
+            const content = problem[language];
+            const saved = hasSavedWork(problem.id)
+              ? `<span class="chip chip--green">${t("saved")(completedCount(normalizeWork(state.work[problem.id])))}</span>`
+              : `<span class="card-meta">${t("notStarted")}</span>`;
+            return `
+            <button class="card problem-card" type="button" data-problem="${problem.id}">
+              <span class="card-head"><span class="chip chip--blue">${content.tag}</span><span class="emoji" aria-hidden="true">${problem.emoji}</span></span>
+              <span class="card-body"><span class="problem-title">${content.title}</span><span class="problem-teaser">${content.teaser}</span></span>
+              <span class="card-foot">${saved}<span class="card-go" aria-hidden="true">→</span></span>
+            </button>`;
+          }).join("")}
+        </div>
+        ${storageWarning()}
+        <p class="footer-note">${t("browserSave")}</p>
+      </div>
+    </section>
   `;
 
   bindHome();
@@ -208,47 +211,53 @@ function renderWorkspace() {
   const step = steps[work.step];
   const done = completedCount(work);
   document.title = `${content.title} – ${t("brand")}`;
-  app.className = "shell shell--work";
+  app.className = "page page--work";
   app.dataset.view = "work";
   app.dataset.problem = problem.id;
   app.dataset.activeStep = String(work.step);
   app.dataset.storage = storageAvailable ? "ok" : "off";
   app.innerHTML = `
-    <button class="back-button" type="button" id="backHome" aria-keyshortcuts="Escape">${t("allProblems")}</button>
-    <section class="problem-banner" aria-labelledby="problemTitle">
-      <span class="emoji" aria-hidden="true">${problem.emoji}</span>
-      <div><p class="eyebrow">${t("yourProblem")}</p><h1 id="problemTitle" tabindex="-1">${content.title}</h1><p>${content.scenario}</p></div>
-    </section>
+    <header class="page-head">
+      <button class="back-button" type="button" id="backHome" aria-keyshortcuts="Escape">${t("allProblems")}</button>
+      <h1 class="app-title" id="problemTitle" tabindex="-1"><span class="title-emoji" aria-hidden="true">${problem.emoji}</span> ${content.title}</h1>
+      <p class="edu-lead">${content.scenario}</p>
+    </header>
 
-    <nav class="steps-nav" aria-label="${t("phasesLabel")}">
-      <ol class="steps">
-        ${steps.map((item, index) => `
-          <li><button class="step-tab" type="button" data-step="${index}" data-done="false" aria-keyshortcuts="${index + 1}" ${index === work.step ? 'aria-current="step"' : ""}>${index + 1}. ${item.title}<span class="visually-hidden" data-done-label></span></button></li>
-        `).join("")}
-      </ol>
-    </nav>
-    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="${STEP_COUNT}" aria-valuenow="${done}" aria-valuetext="${t("progressLabel")(done)}">
-      <span class="progress-bar"></span>
-    </div>
-    <p class="progress-label" id="progressLabel">${t("progressLabel")(done)}</p>
-
-    <section class="panel" aria-labelledby="stepTitle">
-      <div class="step-kicker"><span class="step-number">${work.step + 1}</span> ${t("phaseCount")(work.step + 1)}</div>
-      <h2 id="stepTitle" tabindex="-1">${step.title}</h2>
-      <p class="step-purpose">${step.purpose}</p>
-      ${renderStep(content, work)}
-      <div class="panel-actions">
-        <button class="text-button" type="button" id="clearProblem">${t("clear")}</button>
-        <div class="action-group">
-          <button class="secondary-button" type="button" id="previousStep" aria-keyshortcuts="ArrowLeft" ${work.step === 0 ? "disabled" : ""}>${t("back")}</button>
-          <button class="primary-button" type="button" id="nextStep" aria-keyshortcuts="ArrowRight">${work.step === STEP_COUNT - 1 ? t("seeTrail") : t("next")}</button>
+    <section class="sec sec--work">
+      <div class="wrap">
+        <nav class="steps-nav" aria-label="${t("phasesLabel")}">
+          <ol class="steps">
+            ${steps.map((item, index) => `
+              <li><button class="step-tab" type="button" data-step="${index}" data-done="false" aria-keyshortcuts="${index + 1}" ${index === work.step ? 'aria-current="step"' : ""}><span class="step-index">${index + 1}</span> ${item.title}<span class="visually-hidden" data-done-label></span></button></li>
+            `).join("")}
+          </ol>
+        </nav>
+        <div class="progress-row">
+          <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="${STEP_COUNT}" aria-valuenow="${done}" aria-valuetext="${t("progressLabel")(done)}"><span class="progress-bar"></span></div>
+          <p class="progress-label edu-mono-label" id="progressLabel">${t("progressLabel")(done)}</p>
         </div>
+
+        <section class="card panel" aria-labelledby="stepTitle">
+          <div class="card-head"><span class="edu-overline">${t("phaseCount")(work.step + 1)}</span></div>
+          <div class="card-body">
+            <h2 id="stepTitle" tabindex="-1">${step.title}</h2>
+            <p class="step-purpose">${step.purpose}</p>
+            ${renderStep(content, work)}
+          </div>
+          <div class="card-foot panel-actions">
+            <button class="text-button" type="button" id="clearProblem">${t("clear")}</button>
+            <div class="action-group">
+              <button class="btn-ghost" type="button" id="previousStep" aria-keyshortcuts="ArrowLeft" ${work.step === 0 ? "disabled" : ""}>${t("back")}</button>
+              <button class="edu-btn" type="button" id="nextStep" aria-keyshortcuts="ArrowRight">${work.step === STEP_COUNT - 1 ? t("seeTrail") : t("next")}</button>
+            </div>
+          </div>
+        </section>
+        ${work.step === STEP_COUNT - 1 ? renderSummary(work) : ""}
+        ${storageWarning()}
+        <p class="footer-note">${t("coachFooter")}</p>
+        <p class="footer-note shortcut-hint">${t("shortcuts")}</p>
       </div>
     </section>
-    ${work.step === STEP_COUNT - 1 ? renderSummary(work) : ""}
-    <p class="footer-note">${t("coachFooter")}</p>
-    <p class="footer-note shortcut-hint">${t("shortcuts")}</p>
-    ${storageAvailable ? "" : `<p class="footer-note footer-note--warn" role="status">${t("storageOff")}</p>`}
   `;
 
   refreshCompletion(work);
@@ -257,15 +266,17 @@ function renderWorkspace() {
 
 function renderStep(content, work) {
   const coachButton = (phase, label) => `
-    <button class="secondary-button coach-check" type="button" data-check="${phase}" aria-keyshortcuts="Control+Enter">${label}</button>
+    <button class="btn-ghost coach-check" type="button" data-check="${phase}" aria-keyshortcuts="Control+Enter">${label}</button>
     <div id="coachResponse" aria-live="polite" data-coach=""></div>`;
 
   if (work.step === 0) {
     return `
       ${coachQuestion(content.gapQuestion)}
-      <label for="understandAnswer">${t("noticeLabel")}</label>
-      <textarea id="understandAnswer" data-field="understand" aria-describedby="understandNote" placeholder="${t("noticePlaceholder")}">${escapeHtml(work.understand)}</textarea>
-      <p class="field-note" id="understandNote">${t("noticeNote")}</p>
+      <div class="field">
+        <label for="understandAnswer">${t("noticeLabel")}</label>
+        <textarea class="input" id="understandAnswer" data-field="understand" aria-describedby="understandNote" placeholder="${t("noticePlaceholder")}">${escapeHtml(work.understand)}</textarea>
+        <p class="field-note" id="understandNote">${t("noticeNote")}</p>
+      </div>
       ${nudgeBlock(content.nudge)}
       ${coachButton("understand", t("askCoach"))}
     `;
@@ -274,17 +285,19 @@ function renderStep(content, work) {
   if (work.step === 1) {
     return `
       ${coachQuestion(content.planQuestion)}
-      <fieldset class="approach-fieldset">
+      <fieldset class="field approach-fieldset">
         <legend>${t("gapLabel")}</legend>
         <div class="approach-grid">
           ${Object.entries(t("approaches")).map(([id, label]) => `
-            <button type="button" class="approach-button ${work.approach === id ? "is-selected" : ""}" data-approach="${id}" aria-pressed="${work.approach === id}">${label}</button>
+            <button type="button" class="opt ${work.approach === id ? "is-selected" : ""}" data-approach="${id}" aria-pressed="${work.approach === id}">${label}</button>
           `).join("")}
         </div>
       </fieldset>
-      <label for="planAnswer">${t("planLabel")}</label>
-      <textarea id="planAnswer" data-field="plan" aria-describedby="planNote" placeholder="${t("planPlaceholder")}">${escapeHtml(work.plan)}</textarea>
-      <p class="field-note" id="planNote">${t("planNote")}</p>
+      <div class="field">
+        <label for="planAnswer">${t("planLabel")}</label>
+        <textarea class="input" id="planAnswer" data-field="plan" aria-describedby="planNote" placeholder="${t("planPlaceholder")}">${escapeHtml(work.plan)}</textarea>
+        <p class="field-note" id="planNote">${t("planNote")}</p>
+      </div>
       ${nudgeBlock(t("planNudge"))}
       ${coachButton("plan", t("askCoach"))}
     `;
@@ -305,31 +318,39 @@ function renderStep(content, work) {
 
   return `
     ${coachQuestion(content.reflectQuestion)}
-    <label for="reflectAnswer">${t("conclusionLabel")}</label>
-    <textarea id="reflectAnswer" data-field="reflect" aria-describedby="reflectNote" placeholder="${t("conclusionPlaceholder")}">${escapeHtml(work.reflect)}</textarea>
-    <p class="field-note" id="reflectNote">${t("conclusionNote")}</p>
+    <div class="field">
+      <label for="reflectAnswer">${t("conclusionLabel")}</label>
+      <textarea class="input" id="reflectAnswer" data-field="reflect" aria-describedby="reflectNote" placeholder="${t("conclusionPlaceholder")}">${escapeHtml(work.reflect)}</textarea>
+      <p class="field-note" id="reflectNote">${t("conclusionNote")}</p>
+    </div>
     ${nudgeBlock(t("conclusionNudge"))}
     ${coachButton("reflect", t("askCoach"))}
   `;
 }
 
 function coachQuestion(question) {
-  return `<div class="coach-card"><p class="coach-label">${t("coachAsks")}</p><p class="coach-question">${question}</p></div>`;
+  return `<div class="callout callout--blue edu-block"><p class="edu-overline">${t("coachAsks")}</p><p class="coach-question">${question}</p></div>`;
 }
 
 function nudgeBlock(text) {
-  return `<button class="text-button nudge-toggle" type="button" aria-expanded="false" aria-controls="nudgeText">${t("needQuestion")}</button><div class="nudge" id="nudgeText" hidden><strong>${t("wonder")}</strong> ${text}</div>`;
+  return `<button class="text-button nudge-toggle" type="button" aria-expanded="false" aria-controls="nudgeText">${t("needQuestion")}</button><div class="callout callout--yellow edu-block nudge" id="nudgeText" hidden><strong>${t("wonder")}</strong> ${text}</div>`;
 }
 
 function scenarioCard(letter, scenario, placeholder) {
   const key = letter === "A" ? "scenarioA" : "scenarioB";
   return `
-    <div class="scenario-card">
-      <h3><span class="scenario-letter">${letter}</span> ${t("possibleWorld")(letter)}</h3>
-      <label for="${key}Assumption">${t("assumption")}</label>
-      <input id="${key}Assumption" type="text" data-scenario="${key}" data-part="assumption" value="${escapeHtml(scenario.assumption)}" placeholder="${placeholder}">
-      <label for="${key}Result">${t("follows")}</label>
-      <textarea id="${key}Result" data-scenario="${key}" data-part="result" aria-describedby="tryNote" placeholder="${t("workingPlaceholder")}">${escapeHtml(scenario.result)}</textarea>
+    <div class="card scenario-card">
+      <div class="card-head"><h3><span class="chip ${letter === "A" ? "chip--blue" : "chip--green"}">${letter}</span> ${t("possibleWorld")(letter)}</h3></div>
+      <div class="card-body">
+        <div class="field">
+          <label for="${key}Assumption">${t("assumption")}</label>
+          <input class="input" id="${key}Assumption" type="text" data-scenario="${key}" data-part="assumption" value="${escapeHtml(scenario.assumption)}" placeholder="${placeholder}">
+        </div>
+        <div class="field">
+          <label for="${key}Result">${t("follows")}</label>
+          <textarea class="input" id="${key}Result" data-scenario="${key}" data-part="result" aria-describedby="tryNote" placeholder="${t("workingPlaceholder")}">${escapeHtml(scenario.result)}</textarea>
+        </div>
+      </div>
     </div>
   `;
 }
@@ -343,14 +364,15 @@ function renderSummary(work) {
     ["reflect", t("summaryConclusion"), work.reflect]
   ];
   return `
-    <section class="summary-card" id="reasoningTrail" aria-labelledby="summaryTitle">
-      <p class="eyebrow">${t("trailEyebrow")}</p>
-      <h2 id="summaryTitle" tabindex="-1">${t("trailTitle")}</h2>
-      <p>${t("trailText")}</p>
-      <div class="reasoning-trail">
-        ${items.map(([key, title, value]) => `<div class="trail-item"><strong>${title}</strong><p data-summary="${key}" class="${value.trim() ? "" : "empty-answer"}">${value.trim() ? escapeHtml(value) : t("notWritten")}</p></div>`).join("")}
+    <section class="card summary-card" id="reasoningTrail" aria-labelledby="summaryTitle">
+      <div class="card-head"><h2 id="summaryTitle" tabindex="-1">${t("trailTitle")}</h2></div>
+      <div class="card-body">
+        <p>${t("trailText")}</p>
+        <div class="reasoning-trail">
+          ${items.map(([key, title, value]) => `<div class="trail-item"><p class="edu-overline">${title}</p><p data-summary="${key}" class="${value.trim() ? "" : "empty-answer"}">${value.trim() ? escapeHtml(value) : t("notWritten")}</p></div>`).join("")}
+        </div>
       </div>
-      <button class="secondary-button" type="button" id="chooseAnother">${t("anotherProblem")}</button>
+      <div class="card-foot"><button class="btn-ghost" type="button" id="chooseAnother">${t("anotherProblem")}</button></div>
     </section>
   `;
 }
@@ -384,7 +406,7 @@ function showCoach(problem, work, phase) {
   delete response.dataset.coach;
   requestAnimationFrame(() => {
     response.dataset.coach = key;
-    response.innerHTML = `<div class="coach-response"><strong>${t("coachNotices")}</strong>${escapeHtml(message)}</div>`;
+    response.innerHTML = `<div class="callout callout--green edu-block"><strong>${t("coachNotices")}</strong> ${escapeHtml(message)}</div>`;
   });
 }
 
@@ -483,10 +505,10 @@ function bindWorkspace(problem, work) {
   document.getElementById("chooseAnother")?.addEventListener("click", goHome);
 }
 
-homeLink.addEventListener("click", event => {
+[homeLink, appLink].forEach(link => link.addEventListener("click", event => {
   event.preventDefault();
   goHome();
-});
+}));
 
 languageSwitch.querySelectorAll("[data-language]").forEach(button => {
   button.addEventListener("click", () => {
@@ -520,3 +542,12 @@ document.addEventListener("keydown", event => {
 updateLanguageChrome();
 if (state.activeProblem && findProblem(state.activeProblem)) renderWorkspace();
 else renderHome();
+
+// ─── Reveal ───
+// The boot gate in index.html keeps the page hidden until the brand fonts are in (max 1.5 s).
+const FONT_WAIT_MS = 1500;
+const BRAND_FONTS = ["400 1em Outfit", "700 1em Outfit", '400 1em "IBM Plex Sans"', '600 1em "IBM Plex Sans"', '400 1em "Roboto Mono"'];
+Promise.race([
+  Promise.all(BRAND_FONTS.map(font => document.fonts.load(font).catch(() => null))),
+  new Promise(resolve => setTimeout(resolve, FONT_WAIT_MS))
+]).then(() => document.documentElement.classList.add("app-ready"));

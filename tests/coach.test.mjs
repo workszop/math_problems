@@ -126,11 +126,17 @@ test("no em-dashes in shipped files", () => {
   for (const name of files) assert.ok(!readFileSync(new URL(name, ROOT), "utf8").includes("—"), name);
 });
 
-test("styles use tokens: no raw colours outside :root", () => {
+test("styles use edulab tokens: no raw colours, every token defined", () => {
+  const tokens = readFileSync(new URL("tokens.css", ROOT), "utf8");
   const css = readFileSync(new URL("styles.css", ROOT), "utf8");
-  const outsideRoot = css.replace(/:root\s*{[^}]*}/, "");
-  assert.deepEqual(outsideRoot.match(/#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(|:\s*(white|black)\b/gi) ?? [], []);
+  assert.deepEqual(css.match(/#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(|:\s*(white|black)\b/gi) ?? [], []);
   for (const name of [...css.matchAll(/var\((--[\w-]+)/g)].map(match => match[1])) {
-    assert.ok(css.includes(`${name}:`), `undefined token ${name}`);
+    assert.ok(tokens.includes(`${name}:`) || css.includes(`${name}:`), `undefined token ${name}`);
   }
+});
+
+test("no partial coloured contours (edulab rule)", () => {
+  const css = readFileSync(new URL("styles.css", ROOT), "utf8");
+  assert.deepEqual(css.match(/border-(top|bottom|left|right)(-color)?:\s*[^;]*var\(--(yellow|blue|green|red)/g) ?? [], []);
+  assert.deepEqual(css.match(/box-shadow:[^;]*inset[^;]*var\(--(yellow|blue|green|red)/g) ?? [], []);
 });

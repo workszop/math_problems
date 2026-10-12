@@ -3,21 +3,37 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interaktywne laboratorium rozwiązywania problemów metodą Pólyi dla ciekawych świata dzieci.">
+  <meta name="description" content="Zadania z brakującymi informacjami do rozwiązywania metodą Pólyi, dla dzieci ciekawych świata.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=2">
+  <meta name="theme-color" content="#FFD500">
   <title>Laboratorium Problemów – Myśl jak Pólya</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap">
+  <style>
+    @keyframes boot-reveal { to { visibility: visible; } }
+    html:not(.app-ready) body { visibility: hidden; animation: boot-reveal 0s 4s forwards; }
+    @media print { html:not(.app-ready) body { visibility: visible; animation: none; } }
+  </style>
+  <noscript><style>html:not(.app-ready) body { visibility: visible; animation: none; }</style></noscript>
+  <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <header class="site-header">
-    <a class="brand" href="#" id="homeLink" aria-label="Strona główna Laboratorium Problemów">
-      <span class="brand-mark" aria-hidden="true">?</span>
-      <span id="brandName">Laboratorium Problemów</span>
-    </a>
-    <div class="header-actions">
-      <p class="header-note" id="headerNote">Prawdziwe problemy. Rozsądne założenia. Wiele dobrych odpowiedzi.</p>
-      <a class="header-guide" id="guideLink" href="guide.html">Poradnik</a>
-      <div class="language-switch" role="group" aria-label="Wybór języka" id="languageSwitch">
+<body class="edu">
+  <header class="edu-header">
+    <div class="edu-header-inner">
+      <a class="edu-brand" href="#" id="homeLink" aria-label="Strona główna Laboratorium Problemów">
+        <img class="edu-logo" src="assets/edulab-mark-ink.png" alt="">
+        <span class="edu-wordmark">edulab</span>
+      </a>
+      <nav class="edu-nav" aria-label="Nawigacja">
+        <a href="#" id="appLink" aria-current="page">Zadania</a>
+        <a href="guide.html" id="guideLink">Poradnik</a>
+      </nav>
+      <div class="edu-seg" role="group" aria-label="Wybór języka" id="languageSwitch">
         <button type="button" data-language="pl" aria-pressed="true">PL</button>
         <button type="button" data-language="en" aria-pressed="false">EN</button>
       </div>
@@ -27,7 +43,7 @@
   <main id="app" tabindex="-1"></main>
 
   <noscript>
-    <p class="noscript">Laboratorium Problemów potrzebuje JavaScriptu, aby zapisywać i wspierać Twoje rozumowanie.</p>
+    <p class="noscript">Laboratorium Problemów działa tylko z włączonym JavaScriptem.</p>
   </noscript>
 
   <script src="data.js"></script>
