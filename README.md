@@ -23,4 +23,20 @@ Postęp jest zapisywany w pamięci lokalnej przeglądarki. Aplikacja nie wymaga 
 
 Interfejs jest dostępny po polsku i angielsku. Polski jest językiem domyślnym, a wybór `PL / EN` jest zapamiętywany w przeglądarce.
 
+Skróty klawiszowe w widoku zadania: `←` / `→` zmiana etapu, `1`–`4` wybór etapu, `Esc` powrót do listy, `Ctrl+Enter` pytanie do trenera.
+
+## Struktura
+
+- `data.js` – treść zadań, etapów i interfejsu (PL i EN obok siebie w jednym obiekcie każdego zadania),
+- `coach.js` – reguły trenera bez dostępu do DOM (dopasowanie rdzeni słów na początku wyrazu, więc działają polskie odmiany),
+- `app.js` – renderowanie, zapis postępu i skróty; stan widoku publikuje w atrybutach `data-*` elementu `#app`.
+
+## Testy
+
+```sh
+node --test tests/*.test.mjs
+```
+
+Testy nie wymagają instalowania pakietów i uruchamiają się w GitHub Actions przy każdym pushu.
+
 Strona `guide.html` zawiera polski poradnik „Jak rozwiązywać trudne zadania matematyczne?” z praktycznymi strategiami i listą kroków pomocnych, gdy uczeń utknie.
