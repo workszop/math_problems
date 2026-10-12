@@ -99,6 +99,27 @@ test("stepComplete thresholds", () => {
   assert.equal(stepComplete(work({ plan: "x".repeat(30) }), 1), false);
 });
 
+// ─── UX audit: UX-002 short answers that name the gap ───
+test("a short answer that names the gap counts and is praised", () => {
+  const rules = { gapWords: byId("fence").pl.gapWords, conditionalWords: T.pl.conditionalWords };
+  assert.equal(stepComplete(work({ understand: "Brak wysokości." }), 0, rules), true);
+  assert.equal(understand("pl", "fence", "Brak wysokości."), "understandFound");
+  assert.equal(stepComplete(work({ understand: "Nie wiem." }), 0, rules), false);
+  assert.equal(understand("pl", "fence", "Nie wiem."), "understandShort");
+});
+
+test("a short conclusion with a condition counts; a bare keyword does not", () => {
+  const rules = { gapWords: [], conditionalWords: T.pl.conditionalWords };
+  assert.equal(stepComplete(work({ reflect: "Jeśli pada, 2 puszki." }), 3, rules), true);
+  assert.equal(reflect("pl", "Jeśli pada, 2 puszki."), "reflectGood");
+  assert.equal(stepComplete(work({ reflect: "jeśli" }), 3, rules), false);
+  assert.equal(reflect("pl", "jeśli"), "reflectShort");
+});
+
+test("every step has a visible completion rule in both languages", () => {
+  for (const lang of ["pl", "en"]) assert.equal(T[lang].doneRules.length, STEPS[lang].length, lang);
+});
+
 // ─── Content invariants ───
 test("PL and EN content have the same shape", () => {
   for (const problem of PROBLEMS) {

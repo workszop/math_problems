@@ -23,6 +23,10 @@ Postęp zapisuje się w pamięci lokalnej przeglądarki. Aplikacji nie trzeba bu
 
 Interfejs jest po polsku (domyślnie) i po angielsku; przeglądarka zapamiętuje wybór `PL / EN`.
 
+Każde zadanie ma własny adres (np. `#/fence` – identyfikator zadania z `data.js`), więc przycisk Wstecz w przeglądarce wraca do listy, a odświeżenie strony otwiera to samo zadanie na tym samym etapie. Lista zadań pokazuje na górze ostatnio otwarte zadanie z przyciskiem „Kontynuuj”.
+
+Etap liczy się jako ukończony, gdy odpowiedź ma co najmniej 20 znaków albo krótko nazywa brakującą informację (w etapie 1) lub warunek (w etapie 4), np. „Brak wysokości.”. Ta zasada jest widoczna pod opisem każdego etapu.
+
 Skróty klawiszowe w widoku zadania: `←` / `→` zmiana etapu, `1`–`4` wybór etapu, `Esc` powrót do listy, `Ctrl+Enter` pytanie do trenera.
 
 ## Struktura

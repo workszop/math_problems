@@ -4,6 +4,8 @@
 const STEP_COUNT = 4;
 const MIN_ANSWER_LENGTH = 20;
 const MIN_SCENARIO_LENGTH = 3;
+// A short answer still counts when it names the gap (or a condition), e.g. "Brak wysokości."
+const MIN_KEYWORD_ANSWER_LENGTH = 10;
 
 function normalizeText(value = "") {
   return String(value).normalize("NFC").toLocaleLowerCase().replace(/\s+/g, " ").trim();
@@ -24,15 +26,24 @@ function clampStep(value) {
   return Number.isInteger(value) ? Math.max(0, Math.min(STEP_COUNT - 1, value)) : 0;
 }
 
-function stepComplete(work, index) {
-  if (index === 0) return work.understand.trim().length >= MIN_ANSWER_LENGTH;
-  if (index === 1) return Boolean(work.approach) && work.plan.trim().length >= MIN_ANSWER_LENGTH;
-  if (index === 2) return scenarioFields(work).every(value => value.trim().length >= MIN_SCENARIO_LENGTH);
-  return work.reflect.trim().length >= MIN_ANSWER_LENGTH;
+function namesKeyword(text, stems = []) {
+  return text.trim().length >= MIN_KEYWORD_ANSWER_LENGTH && matchesAny(text, stems);
 }
 
-function completedCount(work) {
-  return Array.from({ length: STEP_COUNT }, (_, index) => stepComplete(work, index)).filter(Boolean).length;
+function answerCounts(text, stems) {
+  return text.trim().length >= MIN_ANSWER_LENGTH || namesKeyword(text, stems);
+}
+
+// rules = { gapWords, conditionalWords } for the open problem and language.
+function stepComplete(work, index, rules = {}) {
+  if (index === 0) return answerCounts(work.understand, rules.gapWords);
+  if (index === 1) return Boolean(work.approach) && work.plan.trim().length >= MIN_ANSWER_LENGTH;
+  if (index === 2) return scenarioFields(work).every(value => value.trim().length >= MIN_SCENARIO_LENGTH);
+  return answerCounts(work.reflect, rules.conditionalWords);
+}
+
+function completedCount(work, rules = {}) {
+  return Array.from({ length: STEP_COUNT }, (_, index) => stepComplete(work, index, rules)).filter(Boolean).length;
 }
 
 function scenarioFields(work) {
@@ -44,8 +55,8 @@ function scenarioFields(work) {
 function coachKey(content, work, phase, conditionalWords) {
   if (phase === "understand") {
     const answer = work.understand.trim();
-    if (answer.length < MIN_ANSWER_LENGTH) return "understandShort";
-    return matchesAny(answer, content.gapWords) ? "understandFound" : "understandMore";
+    if (namesKeyword(answer, content.gapWords)) return "understandFound";
+    return answer.length < MIN_ANSWER_LENGTH ? "understandShort" : "understandMore";
   }
   if (phase === "plan") {
     if (!work.approach) return "planChoose";
@@ -56,8 +67,8 @@ function coachKey(content, work, phase, conditionalWords) {
     return normalizeText(work.scenarioA.assumption) === normalizeText(work.scenarioB.assumption) ? "trySame" : "tryCompare";
   }
   const answer = work.reflect.trim();
-  if (answer.length < MIN_ANSWER_LENGTH) return "reflectShort";
-  return matchesAny(answer, conditionalWords) ? "reflectGood" : "reflectMore";
+  if (namesKeyword(answer, conditionalWords)) return "reflectGood";
+  return answer.length < MIN_ANSWER_LENGTH ? "reflectShort" : "reflectMore";
 }
 
 function emptyWork() {

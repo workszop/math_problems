@@ -1,9 +1,11 @@
 /* edulab look: every value comes from tokens.css (the edulab design system). No raw colours here. */
 
 /* ─── Base ─── */
+:root { --header-space: 100px; }
+
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-space); }
 
 body.edu { margin: 0; min-width: 320px; font-size: var(--body-lg); line-height: 1.6; }
 
@@ -85,9 +87,17 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .callout--red { background: var(--red-soft); color: var(--red-ink); }
 
 /* ─── Home ─── */
-.method-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: 0; padding: 0; list-style: none; }
-.method-grid h3 { margin: 0 0 var(--sp-2); font-size: var(--h4); font-family: var(--font-display); }
-.method-grid p { margin: 0; font-size: var(--body-sm); }
+.resume { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: var(--sp-6); padding: 14px 18px; border-radius: var(--r-md); background: var(--paper-2); }
+.resume-text { flex: 1 1 260px; min-width: 0; }
+.resume .edu-overline { margin: 0; }
+.resume-title { margin: 2px 0 0; font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; line-height: 1.25; }
+
+/* The method is information, not a choice: a flat numbered list, unlike the clickable problem cards. */
+.method-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 28px; margin: 0; padding: 0; list-style: none; }
+.method-list li { display: flex; align-items: flex-start; gap: 14px; }
+.method-index { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--r-pill); background: var(--paper-3); color: var(--ink); font-family: var(--font-mono); font-weight: 500; }
+.method-list h3 { margin: 4px 0 var(--sp-2); font-size: var(--h4); font-family: var(--font-display); }
+.method-list p { margin: 0; color: var(--ink-2); font-size: var(--body-sm); }
 
 .problem-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 18px; }
 .problem-card { padding: 0; color: var(--ink); text-align: left; cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease; }
@@ -116,7 +126,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .edu-mono-label { margin: 0; color: var(--ink-2); font-family: var(--font-mono); font-size: var(--caption); letter-spacing: .04em; white-space: nowrap; }
 
 .panel h2 { margin: 0; font-size: var(--h2); }
-.step-purpose { margin: var(--sp-2) 0 var(--sp-5); }
+.step-purpose { margin: var(--sp-2) 0 var(--sp-2); }
+.done-rule { margin: 0 0 var(--sp-5); color: var(--ink-2); font-family: var(--font-mono); font-size: var(--caption); letter-spacing: .02em; }
+.done-rule[data-done="true"] { color: var(--green-600); font-weight: 500; }
+.coach-stale { margin: var(--sp-4) 0 0; padding: var(--sp-3) var(--sp-4); border: 1px dashed var(--line-strong); border-radius: var(--r-md); color: var(--ink-2); }
 .coach-question { margin: var(--sp-1) 0 0; font-size: 1.1rem; font-weight: 600; }
 
 .field { margin: var(--sp-5) 0 0; }
@@ -150,6 +163,9 @@ textarea.input { min-height: 140px; resize: vertical; line-height: 1.5; }
 .edu-btn:active { transform: scale(.96); }
 
 .panel-actions .text-button { margin-top: 0; }
+.foot-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; }
+.save-status { color: var(--ink-3); }
+.save-status[data-saved="false"] { color: var(--red-600); }
 .action-group { display: flex; gap: 10px; }
 
 .summary-card { margin-top: var(--sp-6); }
@@ -158,6 +174,7 @@ textarea.input { min-height: 140px; resize: vertical; line-height: 1.5; }
 .trail-item .edu-overline { margin: 0 0 var(--sp-1); }
 .trail-item p { margin: 0; color: var(--ink); white-space: pre-wrap; }
 .trail-item .empty-answer { color: var(--ink-3); font-style: italic; }
+.trail-label { color: var(--ink-2); font-family: var(--font-mono); font-size: var(--caption); letter-spacing: .04em; text-transform: uppercase; }
 
 .footer-note { margin: var(--sp-8) 0 0; color: var(--ink-3); font-size: var(--body-sm); text-align: left; }
 .footer-note + .footer-note { margin-top: var(--sp-2); }
@@ -171,7 +188,6 @@ textarea.input { min-height: 140px; resize: vertical; line-height: 1.5; }
 .guide-toc a { color: var(--ink-2); text-decoration: none; border-radius: var(--r-xs); }
 .guide-toc a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .guide-content { display: grid; gap: 22px; min-width: 0; }
-.guide-section { scroll-margin-top: 100px; }
 .guide-section .card-head h2 { font-size: var(--h3); }
 .guide-section .card-body { padding: 26px 28px 30px; }
 .guide-section h3 { margin: 30px 0 var(--sp-2); font-size: var(--h4); }
@@ -203,6 +219,7 @@ button:focus-visible, a:focus-visible, .input:focus-visible { outline: 3px solid
 
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
+  :root { --header-space: 140px; }
   body.edu { font-size: var(--body); }
   .edu-header-inner { flex-wrap: wrap; gap: var(--sp-2); padding: 6px 16px; }
   .edu-logo { width: 48px; height: 48px; }
@@ -214,7 +231,8 @@ button:focus-visible, a:focus-visible, .input:focus-visible { outline: 3px solid
   .sec > .wrap { padding: 0 16px; }
   .sec-head { flex-direction: column; align-items: stretch; gap: 12px; }
   .sec-head::after { flex: none; width: 100%; }
-  .method-grid { grid-template-columns: 1fr 1fr; }
+  .method-list { grid-template-columns: 1fr; }
+  .resume .edu-btn { flex: 1 1 100%; }
   .steps { grid-template-columns: 1fr 1fr; border-radius: var(--r-lg); }
   .step-tab { border-radius: var(--r-md); min-height: 52px; }
   .scenario-grid { grid-template-columns: 1fr; }

@@ -1,6 +1,7 @@
 // Content lives in data.js (PROBLEMS, STEPS, T); coach rules live in coach.js.
 // DOM contract for automated checks: #app[data-view|data-lang|data-problem|data-active-step|data-completed|data-storage],
-// .step-tab[data-step][data-done], #coachResponse[data-coach].
+// .step-tab[data-step][data-done], #doneRule[data-done], #coachResponse[data-coach] ("stale" after an edit).
+// Routes: "#/<problem-id>" opens a problem, anything else shows the list; Back and Forward follow them.
 
 // ─── Constants ───
 const STORAGE_KEY = "problem-lab-progress-v1";
@@ -124,6 +125,20 @@ function activeWork() {
   return state.activeProblem ? problemWork(state.activeProblem) : null;
 }
 
+function rulesFor(problem) {
+  return { gapWords: problem[language].gapWords, conditionalWords: t("conditionalWords") };
+}
+
+function routeProblem() {
+  const match = location.hash.match(/^#\/([\w-]+)$/);
+  return match && findProblem(match[1]) ? match[1] : null;
+}
+
+function setRoute(id) {
+  if (routeProblem() === id) return;
+  history.pushState({ lab: true }, "", id ? `#/${id}` : location.pathname + location.search);
+}
+
 // ─── Render ───
 function updateLanguageChrome() {
   document.documentElement.lang = language;
@@ -143,8 +158,6 @@ function storageWarning() {
 }
 
 function renderHome() {
-  state.activeProblem = null;
-  saveState();
   document.title = t("pageTitle");
   app.className = "page";
   app.dataset.view = "home";
@@ -156,24 +169,8 @@ function renderHome() {
     <header class="page-head">
       <h1 class="app-title">${t("heroTitle")}</h1>
       <p class="edu-lead">${t("heroLead")}</p>
+      ${renderResume()}
     </header>
-
-    <section class="sec" aria-labelledby="methodTitle">
-      <div class="wrap">
-        <div class="sec-head"><h2 id="methodTitle">${t("loopTitle")}</h2></div>
-        <ol class="method-grid">
-          ${STEPS[language].map((step, index) => `
-            <li class="card">
-              <div class="card-head"><span class="edu-overline">${t("stepLabel")(index + 1)}</span></div>
-              <div class="card-body"><h3>${step.title}</h3><p>${step.purpose}</p></div>
-            </li>`).join("")}
-        </ol>
-        <div class="callout callout--yellow edu-block">
-          <strong>${t("noKeyTitle")}</strong>
-          <p>${t("noKeyText")}</p>
-        </div>
-      </div>
-    </section>
 
     <section class="sec" aria-labelledby="chooseTitle">
       <div class="wrap">
@@ -183,7 +180,7 @@ function renderHome() {
           ${PROBLEMS.map(problem => {
             const content = problem[language];
             const saved = hasSavedWork(problem.id)
-              ? `<span class="chip chip--green">${t("saved")(completedCount(normalizeWork(state.work[problem.id])))}</span>`
+              ? `<span class="chip chip--green">${t("saved")(completedCount(normalizeWork(state.work[problem.id]), rulesFor(problem)))}</span>`
               : `<span class="card-meta">${t("notStarted")}</span>`;
             return `
             <button class="card problem-card" type="button" data-problem="${problem.id}">
@@ -197,9 +194,41 @@ function renderHome() {
         <p class="footer-note">${t("browserSave")}</p>
       </div>
     </section>
+
+    <section class="sec" aria-labelledby="methodTitle">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="methodTitle">${t("loopTitle")}</h2></div>
+        <ol class="method-list">
+          ${STEPS[language].map((step, index) => `
+            <li>
+              <span class="method-index" aria-hidden="true">${index + 1}</span>
+              <div><h3>${step.title}</h3><p>${step.purpose}</p></div>
+            </li>`).join("")}
+        </ol>
+        <div class="callout callout--yellow edu-block">
+          <strong>${t("noKeyTitle")}</strong>
+          <p>${t("noKeyText")}</p>
+        </div>
+      </div>
+    </section>
   `;
 
   bindHome();
+}
+
+function renderResume() {
+  const problem = findProblem(state.activeProblem);
+  if (!problem || !hasSavedWork(problem.id)) return "";
+  const done = completedCount(normalizeWork(state.work[problem.id]), rulesFor(problem));
+  return `
+    <div class="resume" data-resume="${problem.id}">
+      <div class="resume-text">
+        <p class="edu-overline">${t("resumeLabel")}</p>
+        <p class="resume-title"><span aria-hidden="true">${problem.emoji}</span> ${problem[language].title}</p>
+      </div>
+      <span class="chip chip--green">${t("saved")(done)}</span>
+      <button class="edu-btn" type="button" data-problem="${problem.id}" aria-label="${t("resumeButton")}: ${escapeHtml(problem[language].title)}">${t("resumeButton")} →</button>
+    </div>`;
 }
 
 function renderWorkspace() {
@@ -209,7 +238,7 @@ function renderWorkspace() {
   const work = problemWork(problem.id);
   const steps = STEPS[language];
   const step = steps[work.step];
-  const done = completedCount(work);
+  const done = completedCount(work, rulesFor(problem));
   document.title = `${content.title} – ${t("brand")}`;
   app.className = "page page--work";
   app.dataset.view = "work";
@@ -242,10 +271,14 @@ function renderWorkspace() {
           <div class="card-body">
             <h2 id="stepTitle" tabindex="-1">${step.title}</h2>
             <p class="step-purpose">${step.purpose}</p>
+            <p class="done-rule" id="doneRule" data-done="false">${t("doneRules")[work.step]}</p>
             ${renderStep(content, work)}
           </div>
           <div class="card-foot panel-actions">
-            <button class="text-button" type="button" id="clearProblem">${t("clear")}</button>
+            <div class="foot-meta">
+              <button class="text-button" type="button" id="clearProblem">${t("clear")}</button>
+              <span class="save-status edu-mono-label" id="saveStatus" data-saved="${storageAvailable}">${storageAvailable ? t("savedHere") : t("notSavedHere")}</span>
+            </div>
             <div class="action-group">
               <button class="btn-ghost" type="button" id="previousStep" aria-keyshortcuts="ArrowLeft" ${work.step === 0 ? "disabled" : ""}>${t("back")}</button>
               <button class="edu-btn" type="button" id="nextStep" aria-keyshortcuts="ArrowRight">${work.step === STEP_COUNT - 1 ? t("seeTrail") : t("next")}</button>
@@ -260,7 +293,7 @@ function renderWorkspace() {
     </section>
   `;
 
-  refreshCompletion(work);
+  refreshCompletion(work, rulesFor(problem));
   bindWorkspace(problem, work);
 }
 
@@ -355,13 +388,21 @@ function scenarioCard(letter, scenario, placeholder) {
   `;
 }
 
+function scenarioSummary(scenario) {
+  return [[t("assumption"), scenario.assumption], [t("summaryResult"), scenario.result]]
+    .filter(([, value]) => value.trim())
+    .map(([label, value]) => `<span class="trail-label">${label}:</span> ${escapeHtml(value.trim())}`)
+    .join("\n");
+}
+
 function renderSummary(work) {
+  const text = value => escapeHtml(value.trim());
   const items = [
-    ["understand", t("summaryGap"), work.understand],
-    ["plan", `${t("summaryPlan")}${work.approach ? ` – ${approachLabel(work.approach)}` : ""}`, work.plan],
-    ["scenario-a", t("possibleWorld")("A"), `${work.scenarioA.assumption}\n${work.scenarioA.result}`.trim()],
-    ["scenario-b", t("possibleWorld")("B"), `${work.scenarioB.assumption}\n${work.scenarioB.result}`.trim()],
-    ["reflect", t("summaryConclusion"), work.reflect]
+    ["understand", t("summaryGap"), text(work.understand)],
+    ["plan", `${t("summaryPlan")}${work.approach ? ` – ${approachLabel(work.approach)}` : ""}`, text(work.plan)],
+    ["scenario-a", t("possibleWorld")("A"), scenarioSummary(work.scenarioA)],
+    ["scenario-b", t("possibleWorld")("B"), scenarioSummary(work.scenarioB)],
+    ["reflect", t("summaryConclusion"), text(work.reflect)]
   ];
   return `
     <section class="card summary-card" id="reasoningTrail" aria-labelledby="summaryTitle">
@@ -369,7 +410,7 @@ function renderSummary(work) {
       <div class="card-body">
         <p>${t("trailText")}</p>
         <div class="reasoning-trail">
-          ${items.map(([key, title, value]) => `<div class="trail-item"><p class="edu-overline">${title}</p><p data-summary="${key}" class="${value.trim() ? "" : "empty-answer"}">${value.trim() ? escapeHtml(value) : t("notWritten")}</p></div>`).join("")}
+          ${items.map(([key, title, html]) => `<div class="trail-item"><p class="edu-overline">${title}</p><p data-summary="${key}" class="${html ? "" : "empty-answer"}">${html || t("notWritten")}</p></div>`).join("")}
         </div>
       </div>
       <div class="card-foot"><button class="btn-ghost" type="button" id="chooseAnother">${t("anotherProblem")}</button></div>
@@ -377,11 +418,15 @@ function renderSummary(work) {
   `;
 }
 
-function refreshCompletion(work) {
-  const done = completedCount(work);
+function refreshCompletion(work, rules) {
+  const done = completedCount(work, rules);
   app.dataset.completed = String(done);
+  const stepDone = stepComplete(work, work.step, rules);
+  const doneRule = app.querySelector("#doneRule");
+  doneRule.dataset.done = String(stepDone);
+  doneRule.textContent = stepDone ? t("stepIsDone") : t("doneRules")[work.step];
   app.querySelectorAll(".step-tab[data-step]").forEach(button => {
-    const complete = stepComplete(work, Number(button.dataset.step));
+    const complete = stepComplete(work, Number(button.dataset.step), rules);
     button.dataset.done = String(complete);
     button.classList.toggle("is-done", complete);
     button.querySelector("[data-done-label]").textContent = complete ? ` ${t("stepDone")}` : "";
@@ -410,18 +455,47 @@ function showCoach(problem, work, phase) {
   });
 }
 
-// ─── Actions ───
-function goHome() {
-  renderHome();
-  app.focus();
+// An edit makes the last coach message refer to an older answer.
+function markCoachStale() {
+  const response = document.getElementById("coachResponse");
+  if (!response?.dataset.coach || response.dataset.coach === "stale") return;
+  response.dataset.coach = "stale";
+  response.innerHTML = `<p class="coach-stale">${t("coachStale")}</p>`;
 }
 
-function openProblem(id) {
-  if (!findProblem(id)) return renderHome();
+function updateSaveStatus() {
+  const status = document.getElementById("saveStatus");
+  if (!status) return;
+  status.dataset.saved = String(storageAvailable);
+  status.textContent = storageAvailable ? t("savedHere") : t("notSavedHere");
+}
+
+// ─── Actions ───
+// Renders whatever the URL points at: a problem for "#/<id>", otherwise the list.
+function render() {
+  const id = routeProblem();
+  if (!id) return renderHome();
   state.activeProblem = id;
   saveState();
   renderWorkspace();
-  document.getElementById("problemTitle")?.focus();
+}
+
+function showTop(target) {
+  window.scrollTo({ top: 0, behavior: "instant" });
+  target?.focus({ preventScroll: true });
+}
+
+function goHome() {
+  setRoute(null);
+  renderHome();
+  showTop(app);
+}
+
+function openProblem(id) {
+  if (!findProblem(id)) return goHome();
+  setRoute(id);
+  render();
+  showTop(document.getElementById("problemTitle"));
 }
 
 function changeStep(nextStep) {
@@ -466,33 +540,38 @@ function bindWorkspace(problem, work) {
     renderWorkspace();
     document.getElementById("problemTitle")?.focus();
   });
+  const rules = rulesFor(problem);
+  const afterEdit = () => {
+    saveState();
+    updateSaveStatus();
+    markCoachStale();
+    refreshCompletion(work, rules);
+  };
 
   app.querySelectorAll(".step-tab[data-step]").forEach(button => button.addEventListener("click", () => changeStep(Number(button.dataset.step))));
   app.querySelectorAll("[data-field]").forEach(field => field.addEventListener("input", event => {
     const fieldName = event.target.dataset.field;
     work[fieldName] = event.target.value;
-    saveState();
     const summary = app.querySelector(`[data-summary="${fieldName}"]`);
     if (summary) {
       summary.textContent = event.target.value.trim() || t("notWritten");
       summary.classList.toggle("empty-answer", !event.target.value.trim());
     }
-    refreshCompletion(work);
+    afterEdit();
   }));
   app.querySelectorAll("[data-scenario]").forEach(field => field.addEventListener("input", event => {
     work[event.target.dataset.scenario][event.target.dataset.part] = event.target.value;
-    saveState();
-    refreshCompletion(work);
+    afterEdit();
   }));
   app.querySelectorAll("[data-approach]").forEach(button => button.addEventListener("click", () => {
+    if (work.approach === button.dataset.approach) return;
     work.approach = button.dataset.approach;
-    saveState();
     app.querySelectorAll("[data-approach]").forEach(item => {
       const selected = item.dataset.approach === work.approach;
       item.classList.toggle("is-selected", selected);
       item.setAttribute("aria-pressed", String(selected));
     });
-    refreshCompletion(work);
+    afterEdit();
   }));
   app.querySelectorAll(".nudge-toggle").forEach(button => button.addEventListener("click", () => {
     const nudge = button.nextElementSibling;
@@ -516,9 +595,14 @@ languageSwitch.querySelectorAll("[data-language]").forEach(button => {
     language = button.dataset.language;
     writeStorage(LANGUAGE_KEY, language);
     updateLanguageChrome();
-    if (state.activeProblem) renderWorkspace();
+    if (app.dataset.view === "work") renderWorkspace();
     else renderHome();
   });
+});
+
+window.addEventListener("popstate", () => {
+  render();
+  showTop(app.dataset.view === "work" ? document.getElementById("problemTitle") : app);
 });
 
 document.addEventListener("keydown", event => {
@@ -540,8 +624,13 @@ document.addEventListener("keydown", event => {
 
 // ─── Init ───
 updateLanguageChrome();
-if (state.activeProblem && findProblem(state.activeProblem)) renderWorkspace();
-else renderHome();
+const startProblem = routeProblem();
+if (startProblem && !history.state?.lab) {
+  // Opened straight on a problem link: put the list under it so Back lands there, not off the site.
+  history.replaceState({ lab: true }, "", location.pathname + location.search);
+  history.pushState({ lab: true }, "", `#/${startProblem}`);
+}
+render();
 
 // ─── Reveal ───
 // The boot gate in index.html keeps the page hidden until the brand fonts are in (max 1.5 s).
